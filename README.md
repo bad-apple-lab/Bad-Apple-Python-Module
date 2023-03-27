@@ -1,9 +1,9 @@
-# Bad-Apple-Python-Module
+# BadApple-Python-Module
 
 Python Module: Play the video in the console as ASCII art.
 
 ```sh
-pip install bad-apple
+pip install badapple
 ```
 
 ```sh

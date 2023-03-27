@@ -1,0 +1,40 @@
+[project]
+name = "badapple"
+version = "0.0.1"
+description = "play the video in the console as ASCII art"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {file = "LICENSE"}
+keywords = ["badapple", "asciiart"]
+
+authors = [
+  {name = "userElaina", email = "userelaina@pm.me" }
+]
+maintainers = [
+  {name = "userElaina", email = "userelaina@pm.me" }
+]
+
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3"
+]
+
+dependencies = [
+  "opencv-python",
+  "playsound"
+]
+
+# [project.optional-dependencies]
+# dev = ["pillow"]
+
+[project.urls]
+"Homepage" = "https://github.com/userElaina/Bad-Apple-Python-Module"
+"Bug Reports" = "https://github.com/userElaina/Bad-Apple-Python-Module/issues"
+"Source" = "https://github.com/userElaina/Bad-Apple-Python-Module"
+
+[tool.setuptools]
+package-data = {"badapple" = ["*.data", "badapple.mp4"]}
+
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"

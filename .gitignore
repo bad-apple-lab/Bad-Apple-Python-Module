@@ -45,4 +45,5 @@ archive/
 */temp/
 tempCodeRunnerFile.cpp
 
-!src/badapple/*
+!src/badapple/*.data
+!src/badapple/badapple.*

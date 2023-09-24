@@ -2,6 +2,7 @@ cd src
 python -m badapple --help
 python -m badapple --avaliable_player
 python -m badapple
+python -m badapple -i badapple/badapple.badapple --audio ../archive/your_everything.mp3
 python -m badapple --audio_player mpv
 python -m badapple --audio_player aaaa
 python -m badapple --audio_player avplay

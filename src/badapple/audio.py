@@ -2,11 +2,19 @@ import os
 from multiprocessing import Process
 from typing import Tuple
 
-from .players import realias, is_player, is_available, get_availables, playa
+from .util import get_info
+from .players import realias, playa
+from .players import is_player, is_available, get_players, get_availables
+
 
 def help_audio() -> None:
-    get_availables()
-    pass
+    l = get_players()
+    r = get_availables()
+    s = 'usage: badapple --audio_player AUDIO_PLAYER [options] ... \n\n'
+    s += get_info() + '\n\navailable AUDIO_PLAYER:\n'
+    for i in l:
+        s += '  ' + i + ' '*(14-len(i)) + ('  ' if i in r else 'un') + 'available\n'
+    print(s)
 
 
 def preplaya(

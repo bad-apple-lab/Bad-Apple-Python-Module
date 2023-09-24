@@ -1,24 +1,18 @@
 import os
 import sys
 import argparse
-import platform
 from multiprocessing import Process
 
 from .play import play
 from .audio import help_audio
-from .players import PLAYERS_AND_AUTO
-
-VERSION = 'v0.0.1'
+from .players import get_players
+from .util import get_info
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         'badapple',
         'badapple [options] ... ',
-        'BadApple-python-%s-%s-%s' % (
-            platform.system().lower(),
-            platform.machine().lower(),
-            VERSION
-        )
+        get_info(),
     )
 
     parser.add_argument(
@@ -44,7 +38,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--audio_player',
-        help='audio player [%s]' % ' '.join(PLAYERS_AND_AUTO),
+        help='audio player [%s]' % ' '.join(get_players()),
         default=''
     )
 

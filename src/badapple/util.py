@@ -1,6 +1,16 @@
 import os
 import time
+import platform
 from typing import Tuple, Callable
+
+
+def get_info() -> str:
+    from . import VERSION
+    return 'BadApple-Python-%s-%s-%s' % (
+        platform.system(),
+        platform.machine(),
+        VERSION
+    )
 
 
 def console_size(x: int, y: int) -> int:

@@ -28,9 +28,9 @@ __PYAUDIO = 'pyaudio'  # wav
 __PLAYSOUND = 'playsound'  # mp3+wav not_win
 __PYDUB = 'pydub'  # simpleaudio-pyaudio-avplay-ffplay
 
-AUTO = 'auto'
+__AUTO = 'auto'
 
-PLAYERS = [
+__PLAYERS = [
     __FFPLAY,
     __AVPLAY,
     __MPV,
@@ -43,10 +43,10 @@ PLAYERS = [
     __PYDUB,
 ]
 
-PLAYERS_AND_AUTO = [AUTO, ] + PLAYERS
+__PLAYERS_AND_AUTO = [__AUTO, ] + __PLAYERS.copy()
 
 ALIAS = {
-    AUTO: [None, '', 'default'],
+    __AUTO: [None, '', 'default'],
     __FFPLAY: ['ffmpeg',],
     __AVPLAY: list(),
     __MPV: list(),
@@ -66,7 +66,7 @@ player_play = dict()
 
 def reg_check(player: str) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
     def __get_f(f: Callable[[], bool]) -> Callable[[], bool]:
-        if player not in PLAYERS_AND_AUTO:
+        if player not in __PLAYERS_AND_AUTO:
             raise ValueError(player)
         if player in player_check:
             raise ValueError(player)
@@ -77,7 +77,7 @@ def reg_check(player: str) -> Callable[[Callable[[], bool]], Callable[[], bool]]
 
 def reg_play(player: str) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
     def __get_f(f: Callable[[str], None]) -> Callable[[str], None]:
-        if player not in PLAYERS_AND_AUTO:
+        if player not in __PLAYERS_AND_AUTO:
             raise ValueError(player)
         if player in player_play:
             raise ValueError(player)
@@ -266,13 +266,13 @@ def play_playsound(audio: str) -> None:
     playback.play(AudioSegment.from_file(audio))
 
 
-@reg_check(AUTO)
+@reg_check(__AUTO)
 def check_auto() -> bool:
     return True
 
-@reg_play(AUTO)
+@reg_play(__AUTO)
 def play_auto(audio: str) -> None:
-    for i in PLAYERS:
+    for i in __PLAYERS:
         a = time.time()
         try:
             player_play[i](audio)
@@ -289,15 +289,17 @@ def realias(player: str) -> str:
 
 
 def is_player(player: str) -> bool:
-    return realias(player) in PLAYERS_AND_AUTO
+    return realias(player) in __PLAYERS_AND_AUTO
 
 
 def is_available(player: str) -> bool:
     return player_check.get(realias(player), lambda:False)()
 
+def get_players() -> list:
+    return __PLAYERS_AND_AUTO.copy()
 
 def get_availables() -> list:
-    return [i for i in PLAYERS_AND_AUTO if is_available(i)]
+    return [i for i in __PLAYERS_AND_AUTO if is_available(i)]
 
 
 def playa(audio: str, player: str) -> None:
@@ -305,11 +307,11 @@ def playa(audio: str, player: str) -> None:
 
 
 if __name__ == '__main__':
-    for i in PLAYERS_AND_AUTO:
+    for i in __PLAYERS_AND_AUTO:
         assert i in ALIAS
         assert i in player_check
         assert i in player_play
-    assert len(PLAYERS_AND_AUTO) == len(ALIAS)
-    assert len(PLAYERS_AND_AUTO) == len(player_check)
-    assert len(PLAYERS_AND_AUTO) == len(player_play)
+    assert len(__PLAYERS_AND_AUTO) == len(ALIAS)
+    assert len(__PLAYERS_AND_AUTO) == len(player_check)
+    assert len(__PLAYERS_AND_AUTO) == len(player_play)
 

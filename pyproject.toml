@@ -1,6 +1,6 @@
 [project]
 name = "badapple"
-version = "0.0.1"
+version = "0.0.2"
 description = "play the video in the console as ASCII art"
 readme = "README.md"
 requires-python = ">=3.7"
@@ -20,12 +20,14 @@ classifiers = [
 ]
 
 dependencies = [
-  "opencv-python",
-  "playsound"
+  "opencv-python"
 ]
 
-# [project.optional-dependencies]
-# dev = ["pillow"]
+[project.optional-dependencies]
+simpleaudio = ["simpleaudio"]
+pyaudio = ["pyaudio"]
+playsound = ["playsound2"]
+pydub = ["pydub"]
 
 [project.urls]
 "Homepage" = "https://github.com/userElaina/Bad-Apple-Python-Module"
@@ -33,7 +35,7 @@ dependencies = [
 "Source" = "https://github.com/userElaina/Bad-Apple-Python-Module"
 
 [tool.setuptools]
-package-data = {"badapple" = ["*.data", "badapple.mp4"]}
+package-data = {"badapple" = ["*.data", "badapple.*"]}
 
 [build-system]
 requires = ["setuptools>=43.0.0", "wheel"]

@@ -5,7 +5,8 @@ import platform
 from multiprocessing import Process
 
 from .play import play
-from .audio import PLAYERS, help_audio
+from .audio import help_audio
+from .players import PLAYERS_AND_AUTO
 
 VERSION = 'v0.0.1'
 
@@ -43,7 +44,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--audio_player',
-        help='audio player [%s]' % ' '.join(PLAYERS),
+        help='audio player [%s]' % ' '.join(PLAYERS_AND_AUTO),
         default=''
     )
 

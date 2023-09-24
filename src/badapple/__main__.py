@@ -9,6 +9,18 @@ from .players import get_players
 from .util import get_info
 
 if __name__ == "__main__":
+    D_DIR = os.path.dirname(__file__)
+    D_MP3 = '_BADAPPLE_MP3'
+    D_MP4 = '_BADAPPLE_MP4'
+    D_WAV = '_BADAPPLE_WAV'
+    D_BA = '_BADAPPLE_BADAPPLE'
+    D_FILES = {
+        D_MP3: os.path.join(D_DIR, 'badapple.mp3'),
+        D_MP4: os.path.join(D_DIR, 'badapple.mp4'),
+        D_WAV: os.path.join(D_DIR, 'badapple.wav'),
+        D_BA: os.path.join(D_DIR, 'badapple.badapple'),
+    }
+
     parser = argparse.ArgumentParser(
         'badapple',
         'badapple [options] ... ',
@@ -17,8 +29,8 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '-i', '--input',
-        help='video file',
-        default=os.path.join(os.path.dirname(__file__), 'badapple.mp4')
+        help='video file (use _BADAPPLE_MP4 or _BADAPPLE_BADAPPLE to load built-in video)',
+        default=D_MP4
     )
     parser.add_argument(
         '-o', '--output',
@@ -33,7 +45,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--audio',
-        help='audio file',
+        help='audio file (use _BADAPPLE_MP3 or _BADAPPLE_WAV to load built-in audio)',
         default=''
     )
     parser.add_argument(
@@ -99,17 +111,22 @@ if __name__ == "__main__":
 
     p_list: list[Process] = list()
 
+    video=D_FILES.get(a.input, a.input)
+    audio=D_FILES.get(a.audio, a.audio)
+
     try:
         play(
             p_list=p_list,
-            video=a.input, output=a.output,
-            font=a.font, audio=a.audio, player=a.audio_player,
+            video=video, output=a.output,
+            font=a.font, audio=audio, player=a.audio_player,
             x=x, y=y, fps=a.rate,
             need_clear=need_clear, check_player=check_player,
             contrast=a.contrast, preload=a.preload,
             debug=a.debug
         )
     except KeyboardInterrupt:
+        pass
+    finally:
         for i in p_list:
-            i.terminate()
-        sys.exit(0)
+            if i.is_alive():
+                i.terminate()

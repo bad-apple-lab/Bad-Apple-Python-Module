@@ -1,6 +1,7 @@
 cd src
 python -m badapple --help
-python -m badapple --audio_player auto
+python -m badapple --avaliable_player
+python -m badapple
 python -m badapple --audio_player mpv
 python -m badapple --audio_player aaaa
 python -m badapple --audio_player avplay

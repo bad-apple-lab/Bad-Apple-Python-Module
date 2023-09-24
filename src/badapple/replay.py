@@ -46,5 +46,5 @@ def replay(
 
     for i in s[1:]:
         rewind()
-        print(i, end='', flush=True)
+        print(i, flush=True)
         timer.wait()

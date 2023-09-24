@@ -1,8 +1,11 @@
 import os
+import sys
 import argparse
 import platform
+from multiprocessing import Process
 
 from .play import play
+from .audio import PLAYERS, help_audio
 
 VERSION = 'v0.0.1'
 
@@ -40,7 +43,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--audio_player',
-        help='audio player [playsound, ]',
+        help='audio player [%s]' % ' '.join(PLAYERS),
         default=''
     )
 
@@ -58,7 +61,12 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '--not_clear',
-        help='not clear screen (with ANSI) before a frame',
+        help='not clear screen (with ANSI) before each frame',
+        action='store_true'
+    )
+    parser.add_argument(
+        '--not_check_player',
+        help='not check if player is available before playing',
         action='store_true'
     )
     parser.add_argument(
@@ -72,6 +80,11 @@ if __name__ == "__main__":
         action='store_true'
     )
     parser.add_argument(
+        '--avaliable_player',
+        help='show avaliable players',
+        action='store_true'
+    )
+    parser.add_argument(
         '--debug',
         help='debug',
         action='store_true'
@@ -79,14 +92,29 @@ if __name__ == "__main__":
 
     a = parser.parse_args()
 
+    if a.avaliable_player:
+        help_audio()
+        sys.exit(0)
+
     x, y = a.scale.split(':')
     x = int(x)
     y = int(y)
+    need_clear = not a.not_clear
+    check_player = not a.not_check_player
 
-    play(
-        video=a.input, output=a.output,
-        font=a.font, audio=a.audio, player=a.audio_player,
-        x=x, y=y, fps=a.rate,
-        not_clear=a.not_clear, contrast=a.contrast, preload=a.preload,
-        debug=a.debug
-    )
+    p_list: list[Process] = list()
+
+    try:
+        play(
+            p_list=p_list,
+            video=a.input, output=a.output,
+            font=a.font, audio=a.audio, player=a.audio_player,
+            x=x, y=y, fps=a.rate,
+            need_clear=need_clear, check_player=check_player,
+            contrast=a.contrast, preload=a.preload,
+            debug=a.debug
+        )
+    except KeyboardInterrupt:
+        for i in p_list:
+            i.terminate()
+        sys.exit(0)

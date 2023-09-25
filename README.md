@@ -27,26 +27,25 @@ python -m badapple
 ```markdown
 usage: badapple [options] ... 
 
-BadApple-Python-OS-ISA-v0.0.2
+BadApple-Python-OS-ISA-v0.0.3
 
 options:
   -h, --help            show this help message and exit
+  --help_audio          show avaliable players
   -i INPUT, --input INPUT
-                        video file (use _BADAPPLE_MP4 or _BADAPPLE_BADAPPLE to load built-in video)
+                        video file (use _BA_MP4 or _BA_BA to load built-in video)
   -o OUTPUT, --output OUTPUT
                         preload output file
   --font FONT           font data file
-  --audio AUDIO         audio file (use _BADAPPLE_MP3 or _BADAPPLE_WAV to load built-in audio)
+  --audio AUDIO         audio file (use _BA_WAV, _BA_MP3 or _BA_MP4 to load built-in audio)
   --audio_player AUDIO_PLAYER
                         audio player [auto ffplay avplay mpv vlc mpg123 cmus simpleaudio pyaudio playsound pydub]
   -s SCALE, --scale SCALE
                         width:height
   -r RATE, --rate RATE  frame rate
   --not_clear           not clear screen (with ANSI) before each frame
-  --not_check_player    not check if player is available before playing
   --contrast            contrast enhancement
   --preload             preload video (not play)
-  --avaliable_player    show avaliable players
   --debug               debug
 ```
 

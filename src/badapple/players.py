@@ -202,8 +202,12 @@ def play_simpleaudio(audio: str) -> None:
     import simpleaudio
     wave_obj = simpleaudio.WaveObject.from_wave_file(audio)
     play_obj = wave_obj.play()
-    play_obj.wait_done()
-    play_obj.stop()
+    try:
+        play_obj.wait_done()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        play_obj.stop()
 
 
 @reg_check(__PYAUDIO)

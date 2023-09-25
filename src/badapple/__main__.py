@@ -29,7 +29,8 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '-i', '--input',
-        help='video file (use _BADAPPLE_MP4 or _BADAPPLE_BADAPPLE to load built-in video)',
+        help='video file ' +
+        '(use _BADAPPLE_MP4 or _BADAPPLE_BADAPPLE to load built-in video)',
         default=D_MP4
     )
     parser.add_argument(
@@ -45,7 +46,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         '--audio',
-        help='audio file (use _BADAPPLE_MP3 or _BADAPPLE_WAV to load built-in audio)',
+        help='audio file ' +
+        '(use _BADAPPLE_MP3 or _BADAPPLE_WAV to load built-in audio)',
         default=''
     )
     parser.add_argument(
@@ -111,8 +113,8 @@ if __name__ == "__main__":
 
     p_list: list[Process] = list()
 
-    video=D_FILES.get(a.input, a.input)
-    audio=D_FILES.get(a.audio, a.audio)
+    video = D_FILES.get(a.input, a.input)
+    audio = D_FILES.get(a.audio, a.audio)
 
     try:
         play(

@@ -21,7 +21,7 @@ __FFPLAY = 'ffplay'  # all
 __AVPLAY = 'avplay'  # all
 __MPV = 'mpv'
 __VLC = 'vlc'
-__MPG123 = 'mpg123' # mp3
+__MPG123 = 'mpg123'  # mp3
 __CMUS = 'cmus'
 __SIMPLEAUDIO = 'simpleaudio'  # wav
 __PYAUDIO = 'pyaudio'  # wav
@@ -64,7 +64,9 @@ player_check = dict()
 player_play = dict()
 
 
-def reg_check(player: str) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
+def reg_check(
+    player: str
+) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
     def __get_f(f: Callable[[], bool]) -> Callable[[], bool]:
         if player not in __PLAYERS_AND_AUTO:
             raise ValueError(player)
@@ -75,7 +77,9 @@ def reg_check(player: str) -> Callable[[Callable[[], bool]], Callable[[], bool]]
     return __get_f
 
 
-def reg_play(player: str) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
+def reg_play(
+    player: str
+) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
     def __get_f(f: Callable[[str], None]) -> Callable[[str], None]:
         if player not in __PLAYERS_AND_AUTO:
             raise ValueError(player)
@@ -274,6 +278,7 @@ def play_pydub(audio: str) -> None:
 def check_auto() -> bool:
     return True
 
+
 @reg_play(__AUTO)
 def play_auto(audio: str) -> None:
     for i in __PLAYERS:
@@ -297,10 +302,12 @@ def is_player(player: str) -> bool:
 
 
 def is_available(player: str) -> bool:
-    return player_check.get(realias(player), lambda:False)()
+    return player_check.get(realias(player), lambda: False)()
+
 
 def get_players() -> list:
     return __PLAYERS_AND_AUTO.copy()
+
 
 def get_availables() -> list:
     return [i for i in __PLAYERS_AND_AUTO if is_available(i)]
@@ -318,4 +325,3 @@ if __name__ == '__main__':
     assert len(__PLAYERS_AND_AUTO) == len(ALIAS)
     assert len(__PLAYERS_AND_AUTO) == len(player_check)
     assert len(__PLAYERS_AND_AUTO) == len(player_play)
-

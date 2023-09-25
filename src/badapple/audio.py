@@ -8,12 +8,15 @@ from .players import is_player, is_available, get_players, get_availables
 
 
 def help_audio() -> None:
-    l = get_players()
-    r = get_availables()
+    players = get_players()
+    availables = get_availables()
     s = 'usage: badapple --audio_player AUDIO_PLAYER [options] ... \n\n'
     s += get_info() + '\n\navailable AUDIO_PLAYER:\n'
-    for i in l:
-        s += '  ' + i + ' '*(14-len(i)) + ('  ' if i in r else 'un') + 'available\n'
+    for i in players:
+        s += '  ' + i
+        s += ' '*(14-len(i))
+        s += '  ' if i in availables else 'un'
+        s += 'available\n'
     print(s)
 
 

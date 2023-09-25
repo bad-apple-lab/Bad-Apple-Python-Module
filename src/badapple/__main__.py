@@ -28,7 +28,7 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        '--avaliable_player',
+        '--help_audio',
         help='show avaliable players',
         action='store_true'
     )

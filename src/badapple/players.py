@@ -2,7 +2,8 @@ import os
 import time
 import shlex
 import subprocess
-from typing import Callable
+import multiprocessing
+from abc import ABCMeta, abstractmethod
 
 
 def which(program: str) -> str:
@@ -60,237 +61,7 @@ ALIAS = {
 }
 
 player_realias = {j: i for i in ALIAS for j in ALIAS[i]}
-player_check = dict()
-player_play = dict()
-
-
-def reg_check(
-    player: str
-) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
-    def __get_f(f: Callable[[], bool]) -> Callable[[], bool]:
-        if player not in __PLAYERS_AND_AUTO:
-            raise ValueError(player)
-        if player in player_check:
-            raise ValueError(player)
-        player_check[player] = f
-        return f
-    return __get_f
-
-
-def reg_play(
-    player: str
-) -> Callable[[Callable[[], bool]], Callable[[], bool]]:
-    def __get_f(f: Callable[[str], None]) -> Callable[[str], None]:
-        if player not in __PLAYERS_AND_AUTO:
-            raise ValueError(player)
-        if player in player_play:
-            raise ValueError(player)
-        player_play[player] = f
-        return f
-    return __get_f
-
-
-@reg_check(__FFPLAY)
-def check_ffplay() -> bool:
-    if which('ffplay'):
-        return True
-    else:
-        return False
-
-
-@reg_play(__FFPLAY)
-def play_ffplay(audio: str) -> None:
-    subprocess.call(
-        shlex.split('ffplay -nodisp -autoexit -hide_banner "%s"' % audio),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-
-
-@reg_check(__AVPLAY)
-def check_avplay() -> bool:
-    if which('avplay'):
-        return True
-    else:
-        return False
-
-
-@reg_play(__AVPLAY)
-def play_avplay(audio: str) -> None:
-    subprocess.call(
-        shlex.split('avplay -nodisp -autoexit -hide_banner "%s"' % audio),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-
-
-@reg_check(__MPV)
-def check_mpv() -> bool:
-    if which('mpv'):
-        return True
-    else:
-        return False
-
-
-@reg_play(__MPV)
-def play_mpv(audio: str) -> None:
-    subprocess.call(
-        shlex.split('mpv --no-video "%s"' % audio),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-
-
-@reg_check(__VLC)
-def check_vlc() -> bool:
-    if which('cvlc'):
-        return True
-    else:
-        return False
-
-
-@reg_play(__VLC)
-def play_vlc(audio: str) -> None:
-    subprocess.call(
-        shlex.split('cvlc "%s"' % audio),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-
-
-@reg_check(__MPG123)
-def check_mpg123() -> bool:
-    if which('mpg123'):
-        return True
-    else:
-        return False
-
-
-@reg_play(__MPG123)
-def play_mpg123(audio: str) -> None:
-    subprocess.call(
-        shlex.split('mpg123 "%s"' % audio),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-
-
-@reg_check(__CMUS)
-def check_cmus() -> bool:
-    if which('cmus'):
-        return True
-    else:
-        return False
-
-
-@reg_play(__CMUS)
-def play_cmus(audio: str) -> None:
-    subprocess.call(
-        shlex.split('cmus-remote -f "%s"' % audio),
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-
-
-@reg_check(__SIMPLEAUDIO)
-def check_simpleaudio() -> bool:
-    try:
-        import simpleaudio
-    except ImportError:
-        return False
-    return True
-
-
-@reg_play(__SIMPLEAUDIO)
-def play_simpleaudio(audio: str) -> None:
-    import simpleaudio
-    wave_obj = simpleaudio.WaveObject.from_wave_file(audio)
-    play_obj = wave_obj.play()
-    try:
-        play_obj.wait_done()
-    except KeyboardInterrupt:
-        pass
-    finally:
-        play_obj.stop()
-
-
-@reg_check(__PYAUDIO)
-def check_pyaudio() -> bool:
-    try:
-        import pyaudio
-    except ImportError:
-        return False
-    return True
-
-
-@reg_play(__PYAUDIO)
-def play_pyaudio(audio: str) -> None:
-    import wave
-    import pyaudio
-    CHUNK = 1024
-    with wave.open(audio, 'rb') as wf:
-        p = pyaudio.PyAudio()
-        stream = p.open(
-            format=p.get_format_from_width(wf.getsampwidth()),
-            channels=wf.getnchannels(),
-            rate=wf.getframerate(),
-            output=True
-        )
-        data = wf.readframes(CHUNK)
-        while len(data):
-            stream.write(data)
-            data = wf.readframes(CHUNK)
-        stream.close()
-        p.terminate()
-
-
-@reg_check(__PLAYSOUND)
-def check_playsound() -> bool:
-    try:
-        import playsound
-    except ImportError:
-        return False
-    return True
-
-
-@reg_play(__PLAYSOUND)
-def play_playsound(audio: str) -> None:
-    from playsound import playsound
-    playsound(audio)
-
-
-@reg_check(__PYDUB)
-def check_pydub() -> bool:
-    try:
-        import pydub
-    except ImportError:
-        return False
-    return True
-
-
-@reg_play(__PYDUB)
-def play_pydub(audio: str) -> None:
-    from pydub import AudioSegment, playback
-    playback.play(AudioSegment.from_file(audio))
-
-
-@reg_check(__AUTO)
-def check_auto() -> bool:
-    return True
-
-
-@reg_play(__AUTO)
-def play_auto(audio: str) -> None:
-    for i in __PLAYERS:
-        a = time.time()
-        try:
-            player_play[i](audio)
-            return
-        except KeyboardInterrupt:
-            return
-        except Exception as e:
-            if time.time()-a > 1.:
-                raise e
+player_class = dict()
 
 
 def realias(player: str) -> str:
@@ -301,27 +72,360 @@ def is_player(player: str) -> bool:
     return realias(player) in __PLAYERS_AND_AUTO
 
 
-def is_available(player: str) -> bool:
-    return player_check.get(realias(player), lambda: False)()
-
-
-def get_players() -> list:
+def get_names() -> list:
     return __PLAYERS_AND_AUTO.copy()
 
 
+class Player(metaclass=ABCMeta):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        self.audio = audio
+        self.clk = clk
+
+    @abstractmethod
+    def is_available(self) -> bool:
+        return False
+
+    @abstractmethod
+    def start(self) -> None:
+        pass
+
+    @abstractmethod
+    def run(self) -> int:
+        self.start()
+        self.wait()
+
+    @abstractmethod
+    def is_alive(self) -> bool:
+        return self.process.is_alive()
+
+    @abstractmethod
+    def terminate(self) -> int:
+        if not self.is_alive():
+            return 0
+        self.process.terminate()
+        time.sleep(self.clk)
+        if not self.is_alive():
+            return 0
+        self.process.kill()
+        return 1
+
+    def kill(self) -> int:
+        return self.terminate()
+
+    def wait(self, s: float = -1.) -> int:
+        try:
+            if s < 0:
+                while self.is_alive():
+                    time.sleep(self.clk)
+            else:
+                t = time.time()
+                while time.time()-t < s and self.is_alive():
+                    time.sleep(self.clk)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            return self.terminate()
+
+
+def get_player(player: str, audio: str, clk: float = 0.1) -> Player:
+    assert is_player(player)
+    player = realias(player)
+    return player_class[player](audio, clk)
+
+
+def get_available_player(
+    player: str,
+    audio: str,
+    clk: float = 0.1,
+    err: bool = False,
+) -> None | Player:
+    if not is_player(player):
+        if err:
+            raise ValueError('%s is not a player' % player)
+        else:
+            return None
+    ans = get_player(player, audio)
+    if not ans.is_available():
+        if err:
+            raise ValueError('Player %s is not available' % player)
+        else:
+            return None
+    return ans
+
+
 def get_availables() -> list:
-    return [i for i in __PLAYERS_AND_AUTO if is_available(i)]
+    return [i for i in __PLAYERS_AND_AUTO if get_player(i, '').is_available()]
 
 
-def playa(audio: str, player: str) -> None:
-    player_play[realias(player)](audio)
+class ClPlayer(Player):
+    def __init__(
+        self,
+        executable: str,
+        args: str | list,
+        audio: str,
+        clk: float = 0.1
+    ) -> None:
+        self.executable = executable
+        if isinstance(args, list):
+            args = ' '.join(args)
+        if args:
+            args += ' '
+        self.head = executable + ' ' + args + '"%s"'
+        super().__init__(audio, clk)
+
+    def is_available(self) -> None:
+        if which(self.executable):
+            return True
+        else:
+            return False
+
+    def start(self) -> None:
+        self.process = subprocess.Popen(
+            shlex.split(self.head % self.audio),
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+
+    def run(self) -> int:
+        return super().run()
+
+    def is_alive(self) -> bool:
+        return self.process.poll() is None
+
+    def terminate(self) -> int:
+        return super().terminate()
+
+
+class FFplayPlayer(ClPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__(
+            'ffplay',
+            ['-nodisp', '-autoexit', '-hide_banner',],
+            audio,
+            clk
+        )
+
+
+player_class[__FFPLAY] = FFplayPlayer
+
+
+class AVplayPlayer(ClPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__(
+            'avplay',
+            ['-nodisp', '-autoexit', '-hide_banner',],
+            audio,
+            clk
+        )
+
+
+player_class[__AVPLAY] = AVplayPlayer
+
+
+class MpvPlayer(ClPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__('mpv', '--no-video', audio, clk)
+
+
+player_class[__MPV] = MpvPlayer
+
+
+class VlcPlayer(ClPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__('cvlc', '', audio, clk)
+
+
+player_class[__VLC] = VlcPlayer
+
+
+class Mpg123Player(ClPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__('mpg123', '', audio, clk)
+
+
+player_class[__MPG123] = Mpg123Player
+
+
+class CmusPlayer(ClPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__('cmus-remote', '-f', audio, clk)
+
+
+player_class[__CMUS] = CmusPlayer
+
+
+class SimpleaudioPlayer(Player):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__(audio, clk)
+
+    def is_available(self) -> bool:
+        try:
+            import simpleaudio
+        except ImportError:
+            return False
+        return True
+
+    def start(self) -> None:
+        import simpleaudio as sa
+        self.process = sa.WaveObject.from_wave_file(self.audio).play()
+
+    def run(self) -> int:
+        return super().run()
+
+    def is_alive(self) -> bool:
+        return self.process.is_playing()
+
+    def terminate(self) -> int:
+        if self.is_alive():
+            self.process.stop()
+        return 0
+
+
+player_class[__SIMPLEAUDIO] = SimpleaudioPlayer
+
+
+class ProcessPlayer(Player):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__(audio, clk)
+
+    def start(self) -> None:
+        self.process = multiprocessing.Process(target=self.run)
+        self.process.start()
+
+    def is_alive(self) -> bool:
+        return super().is_alive()
+
+    def terminate(self) -> int:
+        return super().terminate()
+
+
+class PyAudioPlayer(ProcessPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__(audio, clk)
+
+    def is_available(self) -> bool:
+        try:
+            import wave
+            import pyaudio
+        except ImportError:
+            return False
+        return True
+
+    def run(self) -> int:
+        import wave
+        import pyaudio
+        CHUNK = 1024
+        with wave.open(self.audio, 'rb') as wf:
+            p = pyaudio.PyAudio()
+            stream = p.open(
+                format=p.get_format_from_width(wf.getsampwidth()),
+                channels=wf.getnchannels(),
+                rate=wf.getframerate(),
+                output=True
+            )
+            data = wf.readframes(CHUNK)
+            while len(data):
+                stream.write(data)
+                data = wf.readframes(CHUNK)
+            stream.close()
+            p.terminate()
+
+
+player_class[__PYAUDIO] = PyAudioPlayer
+
+
+class PlaysoundPlayer(ProcessPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__(audio, clk)
+
+    def is_available(self) -> bool:
+        try:
+            import playsound
+        except ImportError:
+            return False
+        return True
+
+    def run(self) -> int:
+        import playsound
+        playsound.playsound(self.audio)
+
+
+player_class[__PLAYSOUND] = PlaysoundPlayer
+
+
+class PydubPlayer(ProcessPlayer):
+    def __init__(self, audio: str, clk: float = 0.1) -> None:
+        super().__init__(audio, clk)
+
+    def is_available(self) -> bool:
+        try:
+            import pydub
+        except ImportError:
+            return False
+        return True
+
+    def run(self) -> int:
+        from pydub import AudioSegment, playback
+        playback.play(AudioSegment.from_file(self.audio))
+
+
+player_class[__PYDUB] = PydubPlayer
+
+
+class AutoPlayer(Player):
+    def __init__(
+        self,
+        audio: str,
+        max_wait: float = 0.5,
+        clk: float = 0.1
+    ) -> None:
+        self.max_wait = max_wait
+        super().__init__(audio, clk)
+
+    def is_available(self) -> bool:
+        return True
+
+    def start(self) -> None:
+        for i in player_class:
+            self.process = get_player(i, self.audio, self.clk)
+            try:
+                if not self.process.is_available():
+                    continue
+                try:
+                    self.process.start()
+                except KeyboardInterrupt as e:
+                    raise e
+                except Exception as e:
+                    self.process.terminate()
+                t = time.time()
+                while self.process.is_alive():
+                    if time.time()-t > self.max_wait:
+                        return
+                    time.sleep(self.clk)
+            except KeyboardInterrupt:
+                self.process.terminate()
+                return
+            except Exception as e:
+                self.process.terminate()
+                raise e
+        raise RuntimeError()
+
+    def run(self) -> int:
+        return super().run()
+
+    def is_alive(self) -> bool:
+        return super().is_alive()
+
+    def terminate(self) -> int:
+        return self.process.terminate()
+
+
+player_class[__AUTO] = AutoPlayer
 
 
 if __name__ == '__main__':
     for i in __PLAYERS_AND_AUTO:
         assert i in ALIAS
-        assert i in player_check
-        assert i in player_play
+        assert i in player_class
     assert len(__PLAYERS_AND_AUTO) == len(ALIAS)
-    assert len(__PLAYERS_AND_AUTO) == len(player_check)
-    assert len(__PLAYERS_AND_AUTO) == len(player_play)
+    assert len(__PLAYERS_AND_AUTO) == len(player_class)

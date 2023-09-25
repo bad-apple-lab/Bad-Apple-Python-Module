@@ -5,15 +5,15 @@ from multiprocessing import Process
 
 from .play import play
 from .audio import help_audio
-from .players import get_players
+from .players import get_names
 from .util import get_info
 
 if __name__ == "__main__":
     D_DIR = os.path.dirname(__file__)
-    D_MP3 = '_BADAPPLE_MP3'
-    D_MP4 = '_BADAPPLE_MP4'
-    D_WAV = '_BADAPPLE_WAV'
-    D_BA = '_BADAPPLE_BADAPPLE'
+    D_MP3 = '_BA_MP3'
+    D_MP4 = '_BA_MP4'
+    D_WAV = '_BA_WAV'
+    D_BA = '_BA_BA'
     D_FILES = {
         D_MP3: os.path.join(D_DIR, 'badapple.mp3'),
         D_MP4: os.path.join(D_DIR, 'badapple.mp4'),
@@ -29,10 +29,13 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '-i', '--input',
-        help='video file ' +
-        '(use _BADAPPLE_MP4 or _BADAPPLE_BADAPPLE to load built-in video)',
+        help='video file (use %s or %s to load built-in video)' % (
+            D_MP4,
+            D_BA,
+        ),
         default=D_MP4
     )
+
     parser.add_argument(
         '-o', '--output',
         help='preload output file',
@@ -44,15 +47,19 @@ if __name__ == "__main__":
         help='font data file',
         default=''
     )
+
     parser.add_argument(
         '--audio',
-        help='audio file ' +
-        '(use _BADAPPLE_MP3 or _BADAPPLE_WAV to load built-in audio)',
+        help='audio file (use %s or %s to load built-in audio)' % (
+            D_WAV,
+            D_MP3,
+        ),
         default=''
     )
+
     parser.add_argument(
         '--audio_player',
-        help='audio player [%s]' % ' '.join(get_players()),
+        help='audio player [%s]' % ' '.join(get_names()),
         default=''
     )
 
@@ -73,26 +80,31 @@ if __name__ == "__main__":
         help='not clear screen (with ANSI) before each frame',
         action='store_true'
     )
+
     parser.add_argument(
         '--not_check_player',
         help='not check if player is available before playing',
         action='store_true'
     )
+
     parser.add_argument(
         '--contrast',
         help='contrast enhancement',
         action='store_true'
     )
+
     parser.add_argument(
         '--preload',
         help='preload video (not play)',
         action='store_true'
     )
+
     parser.add_argument(
         '--avaliable_player',
         help='show avaliable players',
         action='store_true'
     )
+
     parser.add_argument(
         '--debug',
         help='debug',

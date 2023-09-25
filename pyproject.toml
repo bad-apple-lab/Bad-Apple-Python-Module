@@ -30,9 +30,9 @@ playsound = ["playsound2"]
 pydub = ["pydub"]
 
 [project.urls]
-"Homepage" = "https://github.com/userElaina/Bad-Apple-Python-Module"
-"Bug Reports" = "https://github.com/userElaina/Bad-Apple-Python-Module/issues"
-"Source" = "https://github.com/userElaina/Bad-Apple-Python-Module"
+"Homepage" = "https://github.com/bad-apple-lab/Bad-Apple-Python-Module"
+"Bug Reports" = "https://github.com/bad-apple-lab/Bad-Apple-Python-Module/issues"
+"Source" = "https://github.com/bad-apple-lab/Bad-Apple-Python-Module"
 
 [tool.setuptools]
 package-data = {"badapple" = ["*.data", "badapple.*"]}

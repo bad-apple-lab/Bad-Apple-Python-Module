@@ -2,7 +2,7 @@ import os
 from multiprocessing import Process
 
 from .util import get_func, Timer
-from .audio import p_playa, preplaya
+from .audio import get_player
 
 
 def replay(
@@ -13,9 +13,7 @@ def replay(
 ) -> None:
     video = os.path.abspath(video)
     open(video, 'r').close()
-    audio, player = preplaya(audio, player, check_player=check_player)
-    if debug:
-        print(audio, player)
+    p = get_player(audio, player, check_player=check_player)
 
     s = open(video, 'r').read().split('\n\n')
     x, y, clk = s[0].split()
@@ -30,9 +28,9 @@ def replay(
     timer = Timer(clk)
     print('BEGINNING...', flush=True)
     timer.slp()
-    if audio:
-        p = p_playa(audio, player)
+    if p:
         p_list.append(p)
+        p.start()
         timer.slp(0.01)
     if debug:
         timer.slp(5)

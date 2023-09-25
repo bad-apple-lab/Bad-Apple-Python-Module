@@ -4,7 +4,7 @@ import numpy as np
 from multiprocessing import Process
 
 from .util import get_func, Timer, Font
-from .audio import preplaya, p_playa
+from .audio import get_player
 from .replay import replay
 
 
@@ -57,9 +57,7 @@ def play(
 
     video = os.path.abspath(video)
     open(video, 'rb').close()
-    audio, player = preplaya(audio, player, video, check_player=check_player)
-    if debug:
-        print(audio, player)
+    p = get_player(audio, player, video, check_player=check_player)
 
     x = int(x)
     y = int(y)
@@ -109,9 +107,9 @@ def play(
         timer = Timer(clk)
         print('BEGINNING...', flush=True)
         timer.slp()
-        if audio:
-            p = p_playa(audio, player)
+        if p:
             p_list.append(p)
+            p.start()
             timer.slp(0.1)
         if debug:
             timer.slp(5)

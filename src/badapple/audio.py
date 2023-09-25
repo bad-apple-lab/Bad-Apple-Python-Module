@@ -15,9 +15,10 @@ def help_audio() -> None:
     for i in players:
         s += '  ' + i
         s += ' '*(14-len(i))
-        s += '  ' if i in availables else 'un'
+        if i not in availables:
+            s += 'un'
         s += 'available\n'
-    print(s)
+    print(s, end='', flush=True)
 
 
 def preplaya(

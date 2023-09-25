@@ -283,9 +283,9 @@ def play_auto(audio: str) -> None:
             return
         except KeyboardInterrupt:
             return
-        except Exception:
+        except Exception as e:
             if time.time()-a > 1.:
-                raise RuntimeError(i)
+                raise e
 
 
 def realias(player: str) -> str:

@@ -1,6 +1,6 @@
 cd src
 py -m badapple --help
-py -m badapple --help_player
+py -m badapple --help_audio
 py -m badapple
 py -m badapple -i aaaa
 py -m badapple -i _BA_BA --audio ../archive/your_everything.mp3

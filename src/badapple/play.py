@@ -43,21 +43,19 @@ def play(
     video: str, output: str,
     font: str, audio: str, player: str,
     x: int, y: int, fps: int,
-    need_clear: bool = True, check_player: bool = True,
-    contrast: bool = False, preload: bool = False,
+    need_clear: bool = True, contrast: bool = False, preload: bool = False,
     debug: bool = False
 ) -> None:
     if video.endswith('.badapple'):
         return replay(
             p_list,
             video, audio, player,
-            need_clear, check_player,
-            debug
+            need_clear, debug
         )
 
     video = os.path.abspath(video)
     open(video, 'rb').close()
-    p = get_player(audio, player, video, check_player=check_player)
+    p = get_player(audio, player, video)
 
     x = int(x)
     y = int(y)

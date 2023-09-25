@@ -28,6 +28,12 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        '--avaliable_player',
+        help='show avaliable players',
+        action='store_true'
+    )
+
+    parser.add_argument(
         '-i', '--input',
         help='video file (use %s or %s to load built-in video)' % (
             D_MP4,
@@ -35,7 +41,6 @@ if __name__ == "__main__":
         ),
         default=D_MP4
     )
-
     parser.add_argument(
         '-o', '--output',
         help='preload output file',
@@ -47,7 +52,6 @@ if __name__ == "__main__":
         help='font data file',
         default=''
     )
-
     parser.add_argument(
         '--audio',
         help='audio file (use %s or %s to load built-in audio)' % (
@@ -56,7 +60,6 @@ if __name__ == "__main__":
         ),
         default=''
     )
-
     parser.add_argument(
         '--audio_player',
         help='audio player [%s]' % ' '.join(get_names()),
@@ -80,28 +83,14 @@ if __name__ == "__main__":
         help='not clear screen (with ANSI) before each frame',
         action='store_true'
     )
-
-    parser.add_argument(
-        '--not_check_player',
-        help='not check if player is available before playing',
-        action='store_true'
-    )
-
     parser.add_argument(
         '--contrast',
         help='contrast enhancement',
         action='store_true'
     )
-
     parser.add_argument(
         '--preload',
         help='preload video (not play)',
-        action='store_true'
-    )
-
-    parser.add_argument(
-        '--avaliable_player',
-        help='show avaliable players',
         action='store_true'
     )
 
@@ -121,7 +110,6 @@ if __name__ == "__main__":
     x = int(x)
     y = int(y)
     need_clear = not a.not_clear
-    check_player = not a.not_check_player
 
     p_list: list[Process] = list()
 
@@ -134,8 +122,7 @@ if __name__ == "__main__":
             video=video, output=a.output,
             font=a.font, audio=audio, player=a.audio_player,
             x=x, y=y, fps=a.rate,
-            need_clear=need_clear, check_player=check_player,
-            contrast=a.contrast, preload=a.preload,
+            need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug
         )
     except KeyboardInterrupt:

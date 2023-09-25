@@ -22,7 +22,6 @@ def get_player(
     audio: str,
     player: str,
     video: str = None,
-    check_player: bool = True
 ) -> None | Player:
     if not audio:
         if not player:

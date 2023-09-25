@@ -8,12 +8,11 @@ from .audio import get_player
 def replay(
     p_list: list[Process],
     video: str, audio: str, player: str,
-    need_clear: bool = True, check_player: bool = True,
-    debug: bool = False
+    need_clear: bool = True, debug: bool = False
 ) -> None:
     video = os.path.abspath(video)
     open(video, 'r').close()
-    p = get_player(audio, player, check_player=check_player)
+    p = get_player(audio, player)
 
     s = open(video, 'r').read().split('\n\n')
     x, y, clk = s[0].split()

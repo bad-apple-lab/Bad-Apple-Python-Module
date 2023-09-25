@@ -256,7 +256,7 @@ def play_playsound(audio: str) -> None:
 
 
 @reg_check(__PYDUB)
-def check_playsound() -> bool:
+def check_pydub() -> bool:
     try:
         import pydub
     except ImportError:
@@ -265,7 +265,7 @@ def check_playsound() -> bool:
 
 
 @reg_play(__PYDUB)
-def play_playsound(audio: str) -> None:
+def play_pydub(audio: str) -> None:
     from pydub import AudioSegment, playback
     playback.play(AudioSegment.from_file(audio))
 

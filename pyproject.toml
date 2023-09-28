@@ -1,6 +1,6 @@
 [project]
 name = "badapple"
-version = "0.0.3"
+version = "0.0.4"
 description = "play the video in the console as ASCII art"
 readme = "README.rst"
 requires-python = ">=3.7"

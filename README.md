@@ -33,7 +33,7 @@ options:
   --font FONT           font data file
   --audio AUDIO         audio file (use _BA_WAV, _BA_MP3 or _BA_MP4 to load built-in audio)
   --audio_player AUDIO_PLAYER
-                        audio player [auto ffplay avplay mpv vlc mpg123 cmus simpleaudio pyaudio playsound pydub]
+                        audio player [auto ffplay mpv vlc mpg123 cmus simpleaudio pyaudio playsound pydub]
   -s SCALE, --scale SCALE
                         width:height
   -r RATE, --rate RATE  frame rate

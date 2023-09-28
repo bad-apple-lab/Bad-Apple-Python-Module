@@ -1,28 +1,22 @@
-# BadApple-Python-Module
+## BadApple-Python-Module
 
 Python Module: Play the video in the console as ASCII art.
 
-Where there is light, there is [Bad Apple!!][ba]
+Where there is light, there is [Bad Apple!!](https://www.youtube.com/watch?v=FtutLA63Cp8)
 
-**Install**: 
+##### Installation
 
 ```sh
 python -m pip install badapple
 ```
 
-**Recommended optional dependencies**: 
-
-Only wav audio or no audio: Python module **simpleaudio**.
-
-Multiple audio & video formats supported: command-line tool **FFmpeg**.
-
-**Run**:
+##### Run
 
 ```sh
 python -m badapple
 ```
 
-**Help message**:
+##### Help message
 
 ```markdown
 usage: badapple [options] ... 
@@ -48,5 +42,3 @@ options:
   --preload             preload video (not play)
   --debug               debug
 ```
-
-[ba]: https://www.youtube.com/watch?v=FtutLA63Cp8

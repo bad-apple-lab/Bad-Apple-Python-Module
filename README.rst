@@ -9,18 +9,21 @@ Install
 -------
 
 .. code-block:: shell
+
     python -m pip install badapple
 
 Run
 ---
 
 .. code-block:: shell
+
     python -m badapple
 
 Help Message
 ------------
 
 .. code-block:: md
+
     usage: badapple [options] ... 
 
     BadApple-Python-OS-ISA-v0.0.4

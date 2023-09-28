@@ -16,12 +16,12 @@ python -m pip install badapple
 python -m badapple
 ```
 
-##### Help message
+##### Help Message
 
 ```markdown
 usage: badapple [options] ... 
 
-BadApple-Python-OS-ISA-v0.0.3
+BadApple-Python-OS-ISA-v0.0.4
 
 options:
   -h, --help            show this help message and exit
@@ -33,7 +33,7 @@ options:
   --font FONT           font data file
   --audio AUDIO         audio file (use _BA_WAV, _BA_MP3 or _BA_MP4 to load built-in audio)
   --audio_player AUDIO_PLAYER
-                        audio player [auto ffplay mpv vlc mpg123 cmus simpleaudio pyaudio playsound pydub]
+                        audio player [ffplay mpv vlc mpg123 cmus simpleaudio pyaudio playsound pydub auto]
   -s SCALE, --scale SCALE
                         width:height
   -r RATE, --rate RATE  frame rate

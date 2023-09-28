@@ -108,7 +108,6 @@ def play(
         if p:
             p_list.append(p)
             p.start()
-            timer.slp(0.1)
         if debug:
             timer.slp(5)
         rewind()

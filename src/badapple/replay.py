@@ -30,7 +30,6 @@ def replay(
     if p:
         p_list.append(p)
         p.start()
-        timer.slp(0.01)
     if debug:
         timer.slp(5)
     rewind()

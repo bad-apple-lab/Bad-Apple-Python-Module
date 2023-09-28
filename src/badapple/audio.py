@@ -1,7 +1,7 @@
 import os
 
 from .util import get_info
-from .players import get_names, get_availables, get_available_player, Player
+from anyplayer import get_names, get_availables, get_available_player, Player
 
 
 def help_audio() -> None:
@@ -22,7 +22,7 @@ def get_player(
     audio: str,
     player: str,
     video: str = None,
-) -> None | Player:
+) -> Player | None:
     if not audio:
         if not player:
             return None

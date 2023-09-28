@@ -4,8 +4,7 @@ import argparse
 from multiprocessing import Process
 
 from .play import play
-from .audio import help_audio
-from .players import get_names
+from .audio import help_audio, get_names
 from .util import get_info
 from .builtin_files import BA_BA, BA_MP4, BA_MP3, BA_WAV, ba_get
 

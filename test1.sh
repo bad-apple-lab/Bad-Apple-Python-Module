@@ -1,3 +1,5 @@
+py -m build
+twine check dist/*
 py1 -m pip install dist/*.whl
 py1 -m badapple --help
 py1 -m badapple --help_audio
@@ -17,3 +19,4 @@ py1 -m badapple -i archive/87011701_p0.jpg -s 85:98 --contrast
 py1 -m badapple -i archive/Elysia1.mp4 -o archive/ely.badapple -s 128:72 -r 10
 py1 -m badapple -i archive/ely.badapple --audio archive/addiction.flac
 py1 -m badapple -i archive/NCOP.mkv -s 96:54 --contrast --audio_player auto
+twine upload dist/*

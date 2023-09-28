@@ -10,6 +10,7 @@ py1 -m badapple --audio _BA_WAV --audio_player vlc
 py1 -m badapple --audio _BA_MP3 --audio_player mpg123
 py1 -m badapple --audio _BA_MP3 --audio_player cmus
 py1 -m badapple --audio _BA_WAV --audio_player simpleaudio
+py1 -m badapple --audio _BA_WAV --audio_player playsound
 py1 -m badapple --audio _BA_MP4 --audio_player pydub
 py1 -m badapple -i archive/87011701_p0.jpg -s 85:98
 py1 -m badapple -i archive/87011701_p0.jpg -s 85:98 --contrast

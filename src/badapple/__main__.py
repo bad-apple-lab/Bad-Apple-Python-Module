@@ -1,10 +1,8 @@
-import os
 import sys
 import argparse
-from multiprocessing import Process
 
 from .play import play
-from .audio import help_audio, get_names
+from .audio import help_audio, with_anyplayer
 from .util import get_info
 from .builtin_files import BA_BA, BA_MP4, BA_MP3, BA_WAV, ba_get
 
@@ -40,20 +38,23 @@ if __name__ == "__main__":
         help='font data file',
         default=''
     )
-    parser.add_argument(
-        '--audio',
-        help='audio file (use %s, %s or %s to load built-in audio)' % (
-            BA_WAV,
-            BA_MP3,
-            BA_MP4,
-        ),
-        default=''
-    )
-    parser.add_argument(
-        '--audio_player',
-        help='audio player [%s]' % ' '.join(get_names()),
-        default=''
-    )
+
+    if with_anyplayer:
+        from anyplayer import get_names
+        parser.add_argument(
+            '--audio',
+            help='audio file (use %s, %s or %s to load built-in audio)' % (
+                BA_WAV,
+                BA_MP3,
+                BA_MP4,
+            ),
+            default=''
+        )
+        parser.add_argument(
+            '--audio_player',
+            help='audio player [%s]' % ' '.join(get_names()),
+            default=''
+        )
 
     parser.add_argument(
         '-s', '--scale',
@@ -103,13 +104,17 @@ if __name__ == "__main__":
     p_list = list()
 
     video = ba_get(a.input)
-    audio = ba_get(a.audio)
+    audio = None
+    player = None
+    if with_anyplayer:
+        audio = ba_get(a.audio)
+        player = a.audio_player
 
     try:
         play(
             p_list=p_list,
             video=video, output=a.output,
-            font=a.font, audio=audio, player=a.audio_player,
+            font=a.font, audio=audio, player=player,
             x=x, y=y, fps=a.rate,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug

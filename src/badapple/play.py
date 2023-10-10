@@ -1,7 +1,6 @@
 import os
 import cv2
 import numpy as np
-from multiprocessing import Process
 
 from .util import get_func, Timer, Font
 from .audio import get_player

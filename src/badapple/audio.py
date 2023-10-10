@@ -1,10 +1,21 @@
 import os
 
 from .util import get_info
-from anyplayer import get_names, get_availables, get_available_player, Player
+
+with_anyplayer = True
+
+try:
+    import anyplayer
+except ImportError:
+    with_anyplayer = False
 
 
 def help_audio() -> None:
+    if not with_anyplayer:
+        print('Please install module anyplayer to play audio', flush=True)
+        return
+
+    from anyplayer import get_names, get_availables
     players = get_names()
     availables = get_availables()
     s = 'usage: badapple --audio_player AUDIO_PLAYER [options] ... \n\n'
@@ -18,11 +29,7 @@ def help_audio() -> None:
     print(s, end='', flush=True)
 
 
-def get_player(
-    audio: str,
-    player: str,
-    video: str = None,
-) -> Player:
+def get_player(audio: str, player: str, video: str = None):
     if not audio:
         if not player:
             return None
@@ -33,4 +40,5 @@ def get_player(
     audio = os.path.abspath(audio)
     open(audio, 'rb').close()
 
+    from anyplayer import get_available_player
     return get_available_player(player, audio, err=True)

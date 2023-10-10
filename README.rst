@@ -3,7 +3,8 @@ BadApple
 
 Python Module: Play the video in the console as ASCII art.
 
-Where there is light, there is `Bad Apple!! <https://www.youtube.com/watch?v=FtutLA63Cp8>`
+Where there is light, there is 
+`Bad Apple!! <https://www.youtube.com/watch?v=FtutLA63Cp8>`_
 
 Install
 -------

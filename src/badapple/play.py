@@ -39,7 +39,7 @@ def get_buffer(
 
 
 def play(
-    p_list: list[Process],
+    p_list: list,
     video: str, output: str,
     font: str, audio: str, player: str,
     x: int, y: int, fps: int,

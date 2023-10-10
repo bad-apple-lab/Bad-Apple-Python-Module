@@ -100,7 +100,7 @@ if __name__ == "__main__":
     y = int(y)
     need_clear = not a.not_clear
 
-    p_list: list[Process] = list()
+    p_list = list()
 
     video = ba_get(a.input)
     audio = ba_get(a.audio)

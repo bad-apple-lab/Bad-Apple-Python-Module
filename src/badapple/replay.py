@@ -6,7 +6,7 @@ from .audio import get_player
 
 
 def replay(
-    p_list: list[Process],
+    p_list: list,
     video: str, audio: str, player: str,
     need_clear: bool = True, debug: bool = False
 ) -> None:

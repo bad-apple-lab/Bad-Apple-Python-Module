@@ -1,3 +1,13 @@
+py1 -m pip uninstall anyplayer
+py1 -m src.badapple --help
+py1 -m src.badapple --help_audio
+py1 -m src.badapple
+py1 -m src.badapple -i _BA_BA --audio archive/your_everything.mp3
+py1 -m src.badapple --audio_player mpv
+py1 -m src.badapple -i archive/87011701_p0.jpg -s 85:98 --contrast
+py1 -m src.badapple -i archive/Elysia1.mp4 -o archive/ely.badapple -s 128:72 -r 10
+py1 -m src.badapple -i archive/ely.badapple
+py1 -m pip install anyplayer
 py1 -m src.badapple --help
 py1 -m src.badapple --help_audio
 py1 -m src.badapple

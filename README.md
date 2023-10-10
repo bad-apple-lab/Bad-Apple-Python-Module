@@ -10,6 +10,18 @@ Where there is light, there is [Bad Apple!!](https://www.youtube.com/watch?v=Ftu
 python -m pip install badapple
 ```
 
+with audio:
+
+```sh
+python -m pip install badapple[audio]
+```
+
+with any supported player:
+
+```sh
+python -m pip install badapple[dev]
+```
+
 ##### Run
 
 ```sh
@@ -21,7 +33,7 @@ python -m badapple
 ```markdown
 usage: badapple [options] ... 
 
-BadApple-Python-OS-ISA-v0.0.4
+BadApple-Python-OS-ISA-v0.0.5
 
 options:
   -h, --help            show this help message and exit

@@ -6,12 +6,24 @@ Python Module: Play the video in the console as ASCII art.
 Where there is light, there is 
 `Bad Apple!! <https://www.youtube.com/watch?v=FtutLA63Cp8>`_
 
-Install
--------
+Installation
+------------
 
 .. code-block:: shell
 
     python -m pip install badapple
+
+with audio:
+
+.. code-block:: shell
+
+    python -m pip install badapple[audio]
+
+with any supported player:
+
+.. code-block:: shell
+
+    python -m pip install badapple[dev]
 
 Run
 ---
@@ -27,7 +39,7 @@ Help Message
 
     usage: badapple [options] ... 
 
-    BadApple-Python-OS-ISA-v0.0.4
+    BadApple-Python-OS-ISA-v0.0.5
 
     options:
       -h, --help            show this help message and exit

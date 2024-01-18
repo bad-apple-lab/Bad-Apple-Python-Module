@@ -11,6 +11,7 @@ if __name__ == "__main__":
         'badapple',
         'badapple [options] ... ',
         get_info(),
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
 
     parser.add_argument(

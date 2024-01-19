@@ -1,6 +1,6 @@
 [project]
 name = "badapple"
-version = "0.0.5"
+version = "0.0.6"
 description = "play the video in the console as ASCII art"
 readme = "README.rst"
 requires-python = ">=3.7"
@@ -24,13 +24,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-audio = ["anyplayer>=0.0.3"]
-anyplayer = ["anyplayer>=0.0.3"]
-simpleaudio = ["anyplayer[simpleaudio]>=0.0.3"]
-pyaudio = ["anyplayer[pyaudio]>=0.0.3"]
-playsound = ["anyplayer[playsound]>=0.0.3"]
-pydub = ["anyplayer[pydub]>=0.0.3"]
-dev = ["anyplayer[dev]>=0.0.3"]
+audio = ["anyplayer>=0.0.5"]
+anyplayer = ["anyplayer>=0.0.5"]
+simpleaudio = ["anyplayer[simpleaudio]>=0.0.5"]
+pyaudio = ["anyplayer[pyaudio]>=0.0.5"]
+playsound = ["anyplayer[playsound]>=0.0.5"]
+dev = ["anyplayer[dev]>=0.0.5"]
 
 [project.urls]
 "Homepage" = "https://github.com/bad-apple-lab/Bad-Apple-Python-Module"

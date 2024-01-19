@@ -56,10 +56,6 @@ def play(
     open(video, 'rb').close()
     p = get_player(audio, player, video)
 
-    x = int(x)
-    y = int(y)
-    y += y & 1
-
     capture = cv2.VideoCapture(video)
     width = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
     width = int(width + 0.5)
@@ -73,9 +69,29 @@ def play(
     mo = max(int(0.5 + rate / fps), 1)
     clk = mo / rate
 
+    max_x, max_y = os.get_terminal_size()
+    max_y = (max_y-1)*2
+
+    x = int(x)
+    y = int(y)
+
+    if x > 0:
+        if y == 0:
+            y = int(height*x/width+0.5)
+    else:
+        if y == 0:
+            x = min(max_x, int(width*max_y/height+0.5))
+            y = min(max_y, int(height*max_x/width+0.5))
+
+    if y % 2:
+        if y == max_y+1:
+            y -= 1
+        else:
+            y += 1
+
     print('[%d:%d %.2lfHz] -> [%d:%d %.2lfHz] %.3lfs' %
           (width, height, rate, x, y, rate / mo, duration), flush=True)
-    # [1444:1080 29.97Hz] -> [76:54 9.99Hz] 232.065s
+    # [1444:1080 29.97Hz] -> [72:54 9.99Hz] 232.065s
 
     rewind, clear, console_size = get_func(need_clear)
     fnt = Font(font)
@@ -112,7 +128,7 @@ def play(
         rewind()
         clear()
         if not debug:
-            console_size(x, y//2+1)
+            # console_size(x, y//2+1)
             rewind()
             clear()
         timer.bg()

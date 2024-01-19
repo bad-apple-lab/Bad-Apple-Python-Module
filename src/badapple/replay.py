@@ -19,7 +19,7 @@ def replay(
     y = int(y)
     clk = float(clk) / 1000.0
 
-    print('[%d:%d %.2lfHz replay]' % (x, y, 1.0/clk))
+    print('[%d:%d %.2lfHz ] -%s-> [replay]' % (x, y, 1.0/clk, p.name if p else ''))
 
     rewind, clear, console_size = get_func(need_clear)
 

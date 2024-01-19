@@ -89,9 +89,8 @@ def play(
         else:
             y += 1
 
-    print('[%d:%d %.2lfHz] -> [%d:%d %.2lfHz] %.3lfs' %
-          (width, height, rate, x, y, rate / mo, duration), flush=True)
-    # [1444:1080 29.97Hz] -> [72:54 9.99Hz] 232.065s
+    print('[%d:%d %.2lfHz] -%s-> [%d:%d %.2lfHz] %.3lfs' % (width, height, rate, p.name if p else '', x, y, rate / mo, duration), flush=True)
+    # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
 
     rewind, clear, console_size = get_func(need_clear)
     fnt = Font(font)

@@ -59,8 +59,8 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '-s', '--scale',
-        help='width:height',
-        default='72:54'
+        help='width:height (0 means auto)',
+        default='0:0'
     )
     parser.add_argument(
         '-r', '--rate',

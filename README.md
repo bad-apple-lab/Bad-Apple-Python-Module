@@ -33,7 +33,7 @@ python -m badapple
 ```markdown
 usage: badapple [options] ... 
 
-BadApple-Python-OS-ISA-v0.0.6
+BadApple-Python-OS-ISA-Version
 
 options:
   -h, --help            show this help message and exit

@@ -76,20 +76,34 @@ def play(
     y = int(y)
 
     if x > 0:
-        if y == 0:
-            y = int(height*x/width+0.5)
+        if y > 0:
+            # x = x
+            # y = y
+            pass
+        else:
+            # x = x
+            y = int(height*x/width + 0.5)
     else:
-        if y == 0:
-            x = min(max_x, int(width*max_y/height+0.5))
-            y = min(max_y, int(height*max_x/width+0.5))
+        if y > 0:
+            x = int(width*y/height + 0.5)
+            # y = y
+        else:
+            x = min(max_x, int(width*max_y/height + 0.5))
+            y = min(max_y, int(height*max_x/width + 0.5))
 
     if y % 2:
         if y == max_y+1:
-            y -= 1
+            y = max_y
         else:
             y += 1
 
-    print('[%d:%d %.2lfHz] -%s-> [%d:%d %.2lfHz] %.3lfs' % (width, height, rate, p.name if p else '', x, y, rate / mo, duration), flush=True)
+    print('[%d:%d %.2lfHz] -%s-> [%d:%d %.2lfHz] %.3lfs/%dms%s' % (
+        width, height, rate,
+        p.name if p else '',
+        x, y, rate / mo,
+        duration, clk*1000+0.5,
+        ' [debug]' if debug else ''
+    ), flush=True)
     # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
 
     rewind, clear, console_size = get_func(need_clear)
@@ -117,7 +131,7 @@ def play(
 
     else:
         timer = Timer(clk)
-        print('BEGINNING...', flush=True)
+        # print('BEGINNING...', flush=True)
         timer.slp()
         if p:
             p_list.append(p)

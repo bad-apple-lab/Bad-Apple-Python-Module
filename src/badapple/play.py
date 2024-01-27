@@ -64,6 +64,8 @@ def play(
     nb_frames = capture.get(cv2.CAP_PROP_FRAME_COUNT)
     nb_frames = int(nb_frames + 0.5)
     rate = capture.get(cv2.CAP_PROP_FPS)
+    if rate < 0.1:
+        raise Exception("The frame rate is %s!" % str(rate))
     duration = nb_frames / rate
 
     mo = max(int(0.5 + rate / fps), 1)

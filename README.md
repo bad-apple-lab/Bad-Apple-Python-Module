@@ -54,3 +54,7 @@ options:
   --preload             preload video (not play) (default: False)
   --debug               debug (default: False)
 ```
+
+##### To Do
+
+RGB with ANSI

@@ -70,6 +70,11 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        '--colorful',
+        help='RGB with ANSI (Experimental)',
+        action='store_true'
+    )
+    parser.add_argument(
         '--not_clear',
         help='not clear screen (with ANSI) before each frame',
         action='store_true'
@@ -116,7 +121,7 @@ if __name__ == "__main__":
             p_list=p_list,
             video=video, output=a.output,
             font=a.font, audio=audio, player=player,
-            x=x, y=y, fps=a.rate,
+            x=x, y=y, fps=a.rate, colorful=a.colorful,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug
         )

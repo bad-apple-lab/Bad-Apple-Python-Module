@@ -1,47 +1,17 @@
 import os
 import cv2
-import numpy as np
 
 from .util import get_func, Timer, Font
 from .audio import get_player
 from .replay import replay
-
-
-def get_buffer(
-    fnt: Font, img: np.ndarray,
-    x: int, y: int,
-    contrast: bool = False,
-):
-    img = cv2.resize(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), (x, y))
-    # ndarray(shape=(y, x), dtype=np.uint8)
-
-    if contrast:
-        max_pixel = np.max(img)
-        min_pixel = np.min(img)
-        if max_pixel == min_pixel:
-            if max_pixel >= 128:
-                img = np.full((y, x), 0xff, dtype=np.uint8)
-            else:
-                img = np.zeros((y, x), dtype=np.uint8)
-        else:
-            max_min = max_pixel - min_pixel
-            img = (((img.astype(dtype=np.uint16) - min_pixel) * 0xff +
-                    max_min // 2) // max_min).astype(dtype=np.uint8)
-
-    buffer = ''
-    for j in range(y//2):
-        for k in range(x):
-            buffer += fnt.get(img[j*2, k], img[j*2+1, k])
-        buffer += '\n'
-
-    return buffer
+from .frame2str import get_buffer
 
 
 def play(
     p_list: list,
     video: str, output: str,
     font: str, audio: str, player: str,
-    x: int, y: int, fps: int,
+    x: int, y: int, fps: int, colorful: bool = False,
     need_clear: bool = True, contrast: bool = False, preload: bool = False,
     debug: bool = False
 ) -> None:
@@ -126,7 +96,7 @@ def play(
                     raise Exception(i)
                 if i % mo:
                     continue
-                buffer = get_buffer(fnt, img, x, y, contrast)
+                buffer = get_buffer(fnt, img, x, y, colorful, contrast)
 
                 fp.write(buffer + '\n')
                 fp.flush()
@@ -154,7 +124,7 @@ def play(
                 raise Exception(i)
             if i % mo:
                 continue
-            buffer = get_buffer(fnt, img, x, y, contrast)
+            buffer = get_buffer(fnt, img, x, y, colorful, contrast)
 
             rewind()
             print(buffer, end='', flush=True)

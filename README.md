@@ -49,6 +49,7 @@ options:
   -s SCALE, --scale SCALE
                         width:height (0 means auto) (default: 0:0)
   -r RATE, --rate RATE  frame rate (default: 1024.0)
+  --colorful            RGB with ANSI (Experimental) (default: False)
   --not_clear           not clear screen (with ANSI) before each frame (default: False)
   --contrast            contrast enhancement (default: False)
   --preload             preload video (not play) (default: False)

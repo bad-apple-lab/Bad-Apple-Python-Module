@@ -1,7 +1,5 @@
 import os
-import time
 import platform
-from typing import Tuple, Callable
 
 
 def get_info() -> str:
@@ -30,25 +28,8 @@ def func_pass() -> None:
     pass
 
 
-def get_func(need_clear: bool = True) -> Tuple[Callable, Callable, Callable]:
+def get_func(need_clear: bool = True):
     if need_clear:
         return rewind, clear, console_size
     else:
         return print, func_pass, func_pass
-
-
-class Timer:
-    def __init__(self, clk: float) -> None:
-        self.clk = clk
-
-    def bg(self) -> None:
-        self.t0 = time.time()
-
-    def wait(self) -> None:
-        t1 = time.time()
-        while t1 - self.t0 < self.clk:
-            t1 = time.time()
-        self.t0 = t1
-
-    def slp(self, s: int = 1) -> None:
-        time.sleep(s)

@@ -1,10 +1,9 @@
 import cv2
 import numpy as np
-from .util import Font
 
 
 def get_buffer(
-    fnt: Font, img: np.ndarray,
+    fontmap: list, img: np.ndarray,
     x: int, y: int, colorful: bool = False,
     contrast: bool = False,
 ) -> str:
@@ -39,7 +38,7 @@ def get_buffer(
 
     for j in range(y//2):
         for k in range(x):
-            buffer += fnt.get(img[j*2, k], img[j*2+1, k])
+            buffer += fontmap[img[j*2, k]][img[j*2+1, k]]
         buffer += '\n'
 
     return buffer

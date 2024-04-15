@@ -1,7 +1,7 @@
 import os
 import cv2
 
-from .util import get_func, Timer, Font
+from .util import get_func, Timer
 from .audio import get_player
 from .replay import replay
 from .frame2str import get_buffer
@@ -79,7 +79,7 @@ def play(
     # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
 
     rewind, clear, console_size = get_func(need_clear)
-    fnt = Font(font)
+    fontmap = open(font, 'r').read().split('\n')
 
     if output or preload:
         if not output:
@@ -96,7 +96,7 @@ def play(
                     raise Exception(i)
                 if i % mo:
                     continue
-                buffer = get_buffer(fnt, img, x, y, colorful, contrast)
+                buffer = get_buffer(fontmap, img, x, y, colorful, contrast)
 
                 fp.write(buffer + '\n')
                 fp.flush()
@@ -124,7 +124,7 @@ def play(
                 raise Exception(i)
             if i % mo:
                 continue
-            buffer = get_buffer(fnt, img, x, y, colorful, contrast)
+            buffer = get_buffer(fontmap, img, x, y, colorful, contrast)
 
             rewind()
             print(buffer, end='', flush=True)

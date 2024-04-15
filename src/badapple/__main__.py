@@ -4,7 +4,7 @@ import argparse
 from .play import play
 from .audio import help_audio, with_anyplayer
 from .util import get_info
-from .builtin_files import BA_BA, BA_MP4, BA_MP3, BA_WAV, ba_get
+from .builtin_files import BA_BA, BA_MP4, BA_MP3, BA_WAV, BA_FONT, ba_get
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '-i', '--input',
-        help='video file (use %s or %s to load built-in video)' % (
+        help='video file (use `%s` `%s` to load built-in video)' % (
             BA_MP4,
             BA_BA,
         ),
@@ -36,15 +36,15 @@ if __name__ == "__main__":
 
     parser.add_argument(
         '--font',
-        help='font data file',
-        default=''
+        help='font data file (use `%s` to load built-in font data)' % BA_FONT,
+        default=BA_FONT
     )
 
     if with_anyplayer:
         from anyplayer import get_names
         parser.add_argument(
             '--audio',
-            help='audio file (use %s, %s or %s to load built-in audio)' % (
+            help='audio file (use `%s` `%s` `%s` to load built-in audio)' % (
                 BA_WAV,
                 BA_MP3,
                 BA_MP4,
@@ -115,12 +115,13 @@ if __name__ == "__main__":
     if with_anyplayer:
         audio = ba_get(a.audio)
         player = a.audio_player
+    font = ba_get(a.font)
 
     try:
         play(
             p_list=p_list,
             video=video, output=a.output,
-            font=a.font, audio=audio, player=player,
+            font=font, audio=audio, player=player,
             x=x, y=y, fps=a.rate, colorful=a.colorful,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug

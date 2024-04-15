@@ -5,6 +5,7 @@ from .play import play
 from .audio import help_audio, with_anyplayer
 from .util import get_info
 from .builtin_files import BA_BA, BA_MP4, BA_MP3, BA_WAV, BA_FONT, ba_get
+from .frame2str import COLOR_TYPE, COLOR_ASCII
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -64,9 +65,9 @@ if __name__ == "__main__":
         )
 
     parser.add_argument(
-        '--colorful',
-        help='RGB with ANSI (Experimental)',
-        action='store_true'
+        '-c', '--color',
+        help='color type [%s]' % ' '.join(COLOR_TYPE),
+        default=COLOR_ASCII
     )
     parser.add_argument(
         '--font',
@@ -123,7 +124,7 @@ if __name__ == "__main__":
             video=video, output=a.output,
             x=x, y=y, fps=a.rate,
             audio=audio, player=player,
-            colorful=a.colorful, font=font,
+            color=a.color, font=font,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug
         )

@@ -13,7 +13,7 @@ def play(
     video: str, output: str,
     x: int, y: int, fps: int,
     audio: str, player: str,
-    colorful: bool, font: str,
+    color: str, font: str,
     need_clear: bool = True, contrast: bool = False, preload: bool = False,
     debug: bool = False
 ) -> None:
@@ -98,7 +98,7 @@ def play(
                     raise Exception(i)
                 if i % mo:
                     continue
-                buffer = get_buffer(img, x, y, colorful, fontmap, contrast)
+                buffer = get_buffer(img, x, y, color, fontmap, contrast)
 
                 fp.write(buffer + '\n')
                 fp.flush()
@@ -125,7 +125,7 @@ def play(
                 raise Exception(i)
             if i % mo:
                 continue
-            buffer = get_buffer(img, x, y, colorful, fontmap, contrast)
+            buffer = get_buffer(img, x, y, color, fontmap, contrast)
 
             rewind()
             # clear()

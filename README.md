@@ -58,6 +58,6 @@ options:
 
 ##### To Do
 
-xterm 256 color support
+update x256offline
 
 start and end time

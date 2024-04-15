@@ -5,7 +5,7 @@ from .play import play
 from .audio import help_audio, with_anyplayer
 from .util import get_info
 from .builtin_files import BA_BA, BA_MP4, BA_MP3, BA_WAV, BA_FONT, ba_get
-from .frame2str import COLOR_TYPE, COLOR_ASCII
+from .color import COLOR_TYPE, COLOR_ASCII
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

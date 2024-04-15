@@ -5,7 +5,7 @@ import cv2
 from .util import get_func
 from .audio import get_player
 from .replay import replay
-from .frame2str import get_buffer
+from .color import get_buffer
 
 
 def play(

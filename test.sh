@@ -29,7 +29,7 @@ py1 -m src.badapple -i archive/NCOP.mkv -s 192:108 -r 10 --colorful --audio_play
 
 py -m build
 twine check dist/*
-py1 -m pip install dist/*.whl
+py1 -m pip install dist/*.whl --force-reinstall
 py1 -m badapple --help
 py1 -m badapple --help_audio
 py1 -m badapple

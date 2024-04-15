@@ -38,10 +38,7 @@ def get_func(need_clear: bool = True) -> Tuple[Callable, Callable, Callable]:
 
 
 class Font:
-    def __init__(self, font: str = '') -> None:
-        if not font:
-            font = os.path.join(os.path.dirname(__file__),
-                                'consola_ascii_0_ff.data')
+    def __init__(self, font: str) -> None:
         self.M = open(font, 'r').read().split('\n')
 
     def get(self, x: int, y: int) -> str:

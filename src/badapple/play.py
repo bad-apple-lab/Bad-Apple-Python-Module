@@ -11,8 +11,9 @@ from .frame2str import get_buffer
 def play(
     p_list: list,
     video: str, output: str,
-    font: str, audio: str, player: str,
-    x: int, y: int, fps: int, colorful: bool = False,
+    x: int, y: int, fps: int,
+    audio: str, player: str,
+    colorful: bool, font: str,
     need_clear: bool = True, contrast: bool = False, preload: bool = False,
     debug: bool = False
 ) -> None:

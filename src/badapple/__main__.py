@@ -35,9 +35,15 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        '--font',
-        help='font data file (use `%s` to load built-in font data)' % BA_FONT,
-        default=BA_FONT
+        '-s', '--scale',
+        help='width:height (0 means auto)',
+        default='0:0'
+    )
+    parser.add_argument(
+        '-r', '--rate',
+        help='frame rate',
+        default=1024.0,
+        type=float
     )
 
     if with_anyplayer:
@@ -58,22 +64,16 @@ if __name__ == "__main__":
         )
 
     parser.add_argument(
-        '-s', '--scale',
-        help='width:height (0 means auto)',
-        default='0:0'
-    )
-    parser.add_argument(
-        '-r', '--rate',
-        help='frame rate',
-        default=1024.0,
-        type=float
-    )
-
-    parser.add_argument(
         '--colorful',
         help='RGB with ANSI (Experimental)',
         action='store_true'
     )
+    parser.add_argument(
+        '--font',
+        help='font data file (use `%s` to load built-in font data)' % BA_FONT,
+        default=BA_FONT
+    )
+
     parser.add_argument(
         '--not_clear',
         help='not clear screen (with ANSI) before each frame',
@@ -121,8 +121,9 @@ if __name__ == "__main__":
         play(
             p_list=p_list,
             video=video, output=a.output,
-            font=font, audio=audio, player=player,
-            x=x, y=y, fps=a.rate, colorful=a.colorful,
+            x=x, y=y, fps=a.rate,
+            audio=audio, player=player,
+            colorful=a.colorful, font=font,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug
         )

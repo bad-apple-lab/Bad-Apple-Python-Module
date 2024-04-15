@@ -3,9 +3,8 @@ import numpy as np
 
 
 def get_buffer(
-    fontmap: list, img: np.ndarray,
-    x: int, y: int, colorful: bool = False,
-    contrast: bool = False,
+    img: np.ndarray, x: int, y: int, colorful: bool = False,
+    fontmap: list = list(), contrast: bool = False,
 ) -> str:
     buffer = ''
 

@@ -55,3 +55,9 @@ options:
   --preload             preload video (not play) (default: False)
   --debug               debug (default: False)
 ```
+
+##### To Do
+
+xterm 256 color support
+
+start and end time

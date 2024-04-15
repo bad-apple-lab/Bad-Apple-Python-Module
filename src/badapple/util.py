@@ -37,14 +37,6 @@ def get_func(need_clear: bool = True) -> Tuple[Callable, Callable, Callable]:
         return print, func_pass, func_pass
 
 
-class Font:
-    def __init__(self, font: str) -> None:
-        self.M = open(font, 'r').read().split('\n')
-
-    def get(self, x: int, y: int) -> str:
-        return self.M[x][y]
-
-
 class Timer:
     def __init__(self, clk: float) -> None:
         self.clk = clk

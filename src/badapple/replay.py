@@ -24,7 +24,7 @@ def replay(
         x, y, 1.0/clk, p.name if p else ''
     ), flush=True)
 
-    rewind, clear, console_size = get_func(need_clear)
+    rewind, clear, console_resize = get_func(need_clear)
 
     # print('BEGINNING...', flush=True)
     time.sleep(1)
@@ -36,14 +36,16 @@ def replay(
     rewind()
     clear()
     if not debug:
-        console_size(x, y//2+1)
+        # console_resize(x, y//2+1)
         rewind()
         clear()
-    t0 = time.time()
 
+    t0 = time.time()
     for i in s[1:]:
         rewind()
+        # clear()
         print(i, flush=True)
+
         t1 = time.time()
         while t1 - t0 < clk:
             t1 = time.time()

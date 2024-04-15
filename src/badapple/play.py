@@ -80,7 +80,7 @@ def play(
     ), flush=True)
     # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
 
-    rewind, clear, console_size = get_func(need_clear)
+    rewind, clear, console_resize = get_func(need_clear)
     fontmap = open(font, 'r').read().split('\n')
 
     if output or preload:
@@ -114,11 +114,11 @@ def play(
         rewind()
         clear()
         if not debug:
-            # console_size(x, y//2+1)
+            # console_resize(x, y//2+1)
             rewind()
             clear()
-        t0 = time.time()
 
+        t0 = time.time()
         for i in range(nb_frames):
             succ, img = capture.read()
             if not succ:
@@ -128,7 +128,9 @@ def play(
             buffer = get_buffer(fontmap, img, x, y, colorful, contrast)
 
             rewind()
+            # clear()
             print(buffer, end='', flush=True)
+
             t1 = time.time()
             while t1 - t0 < clk:
                 t1 = time.time()

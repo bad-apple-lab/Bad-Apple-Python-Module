@@ -1,6 +1,7 @@
 import os
+import time
 
-from .util import get_func, Timer
+from .util import get_func
 from .audio import get_player
 
 
@@ -25,23 +26,26 @@ def replay(
 
     rewind, clear, console_size = get_func(need_clear)
 
-    timer = Timer(clk)
     # print('BEGINNING...', flush=True)
-    timer.slp()
+    time.sleep(1)
     if p:
         p_list.append(p)
         p.start()
     if debug:
-        timer.slp(5)
+        time.sleep(5)
     rewind()
     clear()
     if not debug:
         console_size(x, y//2+1)
         rewind()
         clear()
-    timer.bg()
+    t0 = time.time()
 
     for i in s[1:]:
         rewind()
         print(i, flush=True)
-        timer.wait()
+        t1 = time.time()
+        while t1 - t0 < clk:
+            t1 = time.time()
+        t0 = t1
+

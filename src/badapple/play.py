@@ -1,7 +1,8 @@
 import os
+import time
 import cv2
 
-from .util import get_func, Timer
+from .util import get_func
 from .audio import get_player
 from .replay import replay
 from .frame2str import get_buffer
@@ -102,21 +103,20 @@ def play(
                 fp.flush()
 
     else:
-        timer = Timer(clk)
         # print('BEGINNING...', flush=True)
-        timer.slp()
+        time.sleep(1)
         if p:
             p_list.append(p)
             p.start()
         if debug:
-            timer.slp(5)
+            time.sleep(5)
         rewind()
         clear()
         if not debug:
             # console_size(x, y//2+1)
             rewind()
             clear()
-        timer.bg()
+        t0 = time.time()
 
         for i in range(nb_frames):
             succ, img = capture.read()
@@ -128,4 +128,7 @@ def play(
 
             rewind()
             print(buffer, end='', flush=True)
-            timer.wait()
+            t1 = time.time()
+            while t1 - t0 < clk:
+                t1 = time.time()
+            t0 = t1

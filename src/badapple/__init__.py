@@ -1,4 +1,4 @@
 from .replay import replay
 from .play import play
 
-VERSION = 'v0.0.8a'
+VERSION = 'v0.0.8'

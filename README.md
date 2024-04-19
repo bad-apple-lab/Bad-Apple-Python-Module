@@ -58,6 +58,6 @@ options:
 
 ##### To Do
 
-update x256offline
+fill with fullwidth or halfwidth char
 
 start and end time

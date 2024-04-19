@@ -99,7 +99,10 @@ def play(
                     raise Exception(i)
                 if i % mo:
                     continue
-                buffer = get_buffer(img, x, y, color, fontmap, contrast)
+                buffer = get_buffer(
+                    img, x, y, color, message,
+                    fontmap, contrast
+                )
 
                 fp.write(buffer + '\n')
                 fp.flush()
@@ -126,7 +129,10 @@ def play(
                 raise Exception(i)
             if i % mo:
                 continue
-            buffer = get_buffer(img, x, y, color, fontmap, contrast)
+            buffer = get_buffer(
+                img, x, y, color, message,
+                fontmap, contrast
+            )
 
             rewind()
             # clear()

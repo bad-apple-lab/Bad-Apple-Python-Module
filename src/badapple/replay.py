@@ -8,7 +8,7 @@ from .audio import get_player
 def replay(
     p_list: list,
     video: str, audio: str, player: str,
-    need_clear: bool = True, debug: bool = False
+    message: str, need_clear: bool = True, debug: bool = False
 ) -> None:
     video = os.path.abspath(video)
     open(video, 'r').close()
@@ -20,8 +20,8 @@ def replay(
     y = int(y)
     clk = float(clk) / 1000.0
 
-    print('[%d:%d %.2lfHz ] -%s-> [replay]' % (
-        x, y, 1.0/clk, p.name if p else ''
+    print('[%d:%d %.2lfHz ] -%s-> [replay] %s' % (
+        x, y, 1.0/clk, p.name if p else '', message
     ), flush=True)
 
     rewind, clear, console_resize = get_func(need_clear)

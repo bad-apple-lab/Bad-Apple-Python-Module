@@ -13,7 +13,7 @@ def play(
     video: str, output: str,
     x: int, y: int, fps: int,
     audio: str, player: str,
-    color: str, font: str,
+    color: str, message: str, font: str,
     need_clear: bool = True, contrast: bool = False, preload: bool = False,
     debug: bool = False
 ) -> None:
@@ -21,7 +21,7 @@ def play(
         return replay(
             p_list,
             video, audio, player,
-            need_clear, debug
+            message, need_clear, debug
         )
 
     video = os.path.abspath(video)
@@ -71,12 +71,13 @@ def play(
         else:
             y += 1
 
-    print('[%d:%d %.2lfHz] -%s-> [%d:%d %.2lfHz] %.3lfs/%dms%s' % (
+    print('[%d:%d %.2lfHz] -%s-> [%d:%d %.2lfHz] %.3lfs/%dms%s %s' % (
         width, height, rate,
         p.name if p else '',
         x, y, rate / mo,
         duration, clk*1000+0.5,
-        ' [debug]' if debug else ''
+        ' [debug]' if debug else '',
+        message
     ), flush=True)
     # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
 

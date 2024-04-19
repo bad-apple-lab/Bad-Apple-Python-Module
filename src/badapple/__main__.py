@@ -70,6 +70,11 @@ if __name__ == "__main__":
         default=COLOR_ASCII
     )
     parser.add_argument(
+        '-m', '--message',
+        help='print message',
+        default=''
+    )
+    parser.add_argument(
         '--font',
         help='font data file (use `%s` to load built-in font data)' % BA_FONT,
         default=BA_FONT
@@ -124,7 +129,7 @@ if __name__ == "__main__":
             video=video, output=a.output,
             x=x, y=y, fps=a.rate,
             audio=audio, player=player,
-            color=a.color, font=font,
+            color=a.color, message = a.message, font=font,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug
         )

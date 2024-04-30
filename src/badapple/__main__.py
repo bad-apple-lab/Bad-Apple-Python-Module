@@ -46,6 +46,12 @@ if __name__ == "__main__":
         default=1024.0,
         type=float
     )
+    parser.add_argument(
+        '--jump',
+        help='frame jump',
+        default=0,
+        type=int
+    )
 
     if with_anyplayer:
         from anyplayer import get_names
@@ -131,7 +137,7 @@ if __name__ == "__main__":
             audio=audio, player=player,
             color=a.color, message = a.message, font=font,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
-            debug=a.debug
+            debug=a.debug, jump=a.jump
         )
     except KeyboardInterrupt:
         pass

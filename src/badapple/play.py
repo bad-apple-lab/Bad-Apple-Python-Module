@@ -15,7 +15,7 @@ def play(
     audio: str, player: str,
     color: str, message: str, font: str,
     need_clear: bool = True, contrast: bool = False, preload: bool = False,
-    debug: bool = False
+    debug: bool = False, jump: int = 0
 ) -> None:
     if video.endswith('.badapple'):
         return replay(
@@ -93,6 +93,8 @@ def play(
             fp.write('%d %d %d\n\n' % (x, y, int(clk*1000+0.5)))
             fp.flush()
 
+            for i in range(jump):
+                succ, img = capture.read()
             for i in range(nb_frames):
                 succ, img = capture.read()
                 if not succ:
@@ -122,6 +124,8 @@ def play(
             rewind()
             clear()
 
+        for i in range(jump):
+            succ, img = capture.read()
         t0 = time.time()
         for i in range(nb_frames):
             succ, img = capture.read()

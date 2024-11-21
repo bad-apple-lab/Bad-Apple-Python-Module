@@ -16,7 +16,7 @@ with audio:
 python -m pip install badapple[audio]
 ```
 
-with any supported player:
+with any optional supported players (may fail in some environments):
 
 ```sh
 python -m pip install badapple[dev]

@@ -73,17 +73,16 @@ def get_buffer(
     elif color in COLOR_X256_LIST:
         import x256offline as x256
         y = y // 2
-        img = cv2.resize(img, (x, y))
+        img = cv2.resize(img, (x, y)).astype(np.int32)
         # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
         # x*(y/2) pixel -> x*(y/2) char
         weighted = color in [COLOR_X256W, COLOR_X232W]
         n_color = 232 if color in [COLOR_X232E, COLOR_X232W] else 256
         for j in range(y):
             for k in range(x):
-                tuple(img[j, k][-1::-1])
+                b, g, r = img[j, k]
                 buffer += '\x1b[48;5;%dm ' % x256.from_rgb(
-                    img[j, k, 2], img[j, k, 1], img[j, k, 0],
-                    weighted, n_color
+                    r, g, b, weighted, n_color
                 )
             buffer += '\x1b[0m\n'
 

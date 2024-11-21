@@ -20,17 +20,13 @@ classifiers = [
 ]
 
 dependencies = [
-  "opencv-python",
+  "opencv-python", "x256offline>=0.0.3"
 ]
 
 [project.optional-dependencies]
 audio = ["anyplayer>=0.0.5"]
 anyplayer = ["anyplayer>=0.0.5"]
-simpleaudio = ["anyplayer[simpleaudio]>=0.0.5"]
-pyaudio = ["anyplayer[pyaudio]>=0.0.5"]
-playsound = ["anyplayer[playsound]>=0.0.5"]
-x256 = ["x256offline>=0.0.3"]
-dev = ["anyplayer[dev]>=0.0.5", "x256offline>=0.0.3"]
+dev = ["anyplayer[dev]>=0.0.5"]
 
 [project.urls]
 "Homepage" = "https://github.com/bad-apple-lab/Bad-Apple-Python-Module"

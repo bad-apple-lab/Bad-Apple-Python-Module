@@ -38,7 +38,7 @@ def get_buffer(
     if color == COLOR_ASCII:
         img = cv2.resize(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), (x, y))
         # np.ndarray(shape=(y, x), dtype=np.uint8)
-        # x*y subpixel == x*y/2 pixel == x*y/2 char
+        # x*y pixel -> x*y/2 char
 
         if contrast:
             max_pixel = np.max(img)
@@ -63,8 +63,8 @@ def get_buffer(
     elif color == COLOR_RGB24:
         y = y // 2
         img = cv2.resize(img, (x, y))
-        # np.ndarray(shape=(y, x, 3), dtype=np.uint8)
-        # x*y subpixel == x*y pixel == x*y char
+        # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
+        # x*(y/2) pixel -> x*(y/2) char
         for j in range(y):
             for k in range(x):
                 buffer += '\x1b[48;2;%d;%d;%dm ' % tuple(img[j, k][-1::-1])
@@ -74,7 +74,9 @@ def get_buffer(
         import x256offline as x256
         y = y // 2
         img = cv2.resize(img, (x, y))
-        weighted = color in  [COLOR_X256W, COLOR_X232W]
+        # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
+        # x*(y/2) pixel -> x*(y/2) char
+        weighted = color in [COLOR_X256W, COLOR_X232W]
         n_color = 232 if color in [COLOR_X232E, COLOR_X232W] else 256
         for j in range(y):
             for k in range(x):
@@ -88,6 +90,8 @@ def get_buffer(
     elif color == COLOR_HALFWIDTH:
         y = y // 2
         img = cv2.resize(img, (x, y))
+        # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
+        # x*(y/2) pixel -> x*(y/2) char
         m = message * (x*y//len(message)+1)
         mi = 0
         for j in range(y):
@@ -101,6 +105,8 @@ def get_buffer(
         x = x // 2
         y = y // 2
         img = cv2.resize(img, (x, y))
+        # np.ndarray(shape=(y/2, x/2, 3), dtype=np.uint8)
+        # (x/2)*(y/2) pixel -> (x/2)*(y/2) char
         m = message * (x*y//len(message)+1)
         mi = 0
         for j in range(y):

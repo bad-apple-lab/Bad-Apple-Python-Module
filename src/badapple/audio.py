@@ -12,7 +12,7 @@ except ImportError:
 
 def help_audio() -> None:
     if not with_anyplayer:
-        print('Please install module anyplayer to play audio', flush=True)
+        print('Please `pip install anyplayer` to play audio', flush=True)
         return
 
     from anyplayer import get_names, get_availables

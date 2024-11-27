@@ -37,8 +37,11 @@ def play(
     nb_frames = int(nb_frames + 0.5)
     ori_fps = capture.get(cv2.CAP_PROP_FPS)
     if ori_fps < 0.1:
-        raise Exception("The frame rate is %s!" % str(ori_fps))
+        raise ValueError("The frame rate is %s!" % str(ori_fps))
     duration = nb_frames / ori_fps
+
+    if jump >= nb_frames:
+        return
 
     n_frames_get_1 = max(int(0.5 + ori_fps / fps), 1)
     clk = n_frames_get_1 / ori_fps
@@ -95,10 +98,14 @@ def play(
 
             for i in range(jump):
                 succ, img = capture.read()
-            for i in range(nb_frames):
+                if not succ:
+                    raise RuntimeError(i)
+
+            for i in range(jump, nb_frames):
                 succ, img = capture.read()
                 if not succ:
-                    raise Exception(i)
+                    raise RuntimeError(i)
+
                 if i % n_frames_get_1:
                     continue
                 buffer = get_buffer(
@@ -126,11 +133,15 @@ def play(
 
         for i in range(jump):
             succ, img = capture.read()
+            if not succ:
+                raise RuntimeError(i)
+
         t0 = time.time()
-        for i in range(nb_frames):
+        for i in range(jump, nb_frames):
             succ, img = capture.read()
             if not succ:
-                raise Exception(i)
+                raise RuntimeError(i)
+
             if i % n_frames_get_1:
                 continue
             buffer = get_buffer(

@@ -50,4 +50,3 @@ def replay(
         while t1 - t0 < clk:
             t1 = time.time()
         t0 = t1
-

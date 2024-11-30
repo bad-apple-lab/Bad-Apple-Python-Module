@@ -33,7 +33,7 @@ if __name__ == "__main__":
         '-o', '--output',
         help='preload output file',
         default=''
-    ) # preload
+    )  # preload
 
     parser.add_argument(
         '-s', '--scale',
@@ -84,18 +84,18 @@ if __name__ == "__main__":
         '--font',
         help='font data file (use `%s` to load built-in font data)' % BA_FONT,
         default=BA_FONT
-    ) # ascii
+    )  # ascii
 
     parser.add_argument(
         '--not_clear',
         help='not clear screen (with ANSI) before each frame',
         action='store_true'
-    ) # ascii
+    )  # ascii
     parser.add_argument(
         '--contrast',
         help='contrast enhancement',
         action='store_true'
-    ) # ascii
+    )  # ascii
     parser.add_argument(
         '--preload',
         help='preload video (not play)',
@@ -135,7 +135,7 @@ if __name__ == "__main__":
             video=video, output=a.output,
             x=x, y=y, fps=a.rate,
             audio=audio, player=player,
-            color=a.color, message = a.message, font=font,
+            color=a.color, message=a.message, font=font,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug, jump=a.jump
         )

@@ -10,7 +10,7 @@ _max_err = 0.
 for epoch in range(4096):
     img = np.random.randint(0, 255, (1920, 1080, 3), dtype=np.uint8)
 
-    for x, y in [(96, 54), (192, 108), (66, 44), (100, 100)]:
+    for y, x in [(96, 54), (192, 108), (44, 66), (100, 100)]:
         for __ in range(8):
             t0 = time.time()
             _i = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -62,4 +62,4 @@ for epoch in range(4096):
         _max_err = 0.
 
 print(t_gray_1st, t_resize_1st)
-# 33.83021092414856 6.749794244766235
+# 34.81702136993408 7.499866485595703

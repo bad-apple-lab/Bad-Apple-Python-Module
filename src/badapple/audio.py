@@ -29,16 +29,16 @@ def help_audio() -> None:
     print(s, end='', flush=True)
 
 
-def get_player(audio: str, player: str, video: str = None):
-    if not audio:
+def get_player(audio_pth: str, player: str, video_pth: str = None):
+    if not audio_pth:
         if not player:
             return None
-        if video is None:
-            raise FileNotFoundError(audio)
-        audio = video
+        if video_pth is None:
+            raise FileNotFoundError(audio_pth)
+        audio_pth = video_pth
 
-    audio = os.path.abspath(audio)
-    open(audio, 'rb').close()
+    audio_pth = os.path.abspath(audio_pth)
+    open(audio_pth, 'rb').close()
 
     from anyplayer import get_available_player
-    return get_available_player(player, audio, err=True)
+    return get_available_player(player, audio_pth, err=True)

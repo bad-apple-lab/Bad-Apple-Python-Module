@@ -10,25 +10,25 @@ from .color import get_buffer
 
 def play(
     p_list: list,
-    video: str, output: str,
+    video_pth: str, output_pth: str,
     x: int, y: int, fps: int,
-    audio: str, player: str,
-    color: str, message: str, font: str,
+    audio_pth: str, player: str,
+    color: str, message: str, font_pth: str,
     need_clear: bool = True, contrast: bool = False, preload: bool = False,
     debug: bool = False, jump: int = 0
 ) -> None:
-    if video.endswith('.badapple'):
+    if video_pth.endswith('.badapple'):
         return replay(
             p_list,
-            video, audio, player,
+            video_pth, audio_pth, player,
             message, need_clear, debug
         )
 
-    video = os.path.abspath(video)
-    open(video, 'rb').close()
-    p = get_player(audio, player, video)
+    video_pth = os.path.abspath(video_pth)
+    open(video_pth, 'rb').close()
+    p = get_player(audio_pth, player, video_pth)
 
-    capture = cv2.VideoCapture(video)
+    capture = cv2.VideoCapture(video_pth)
     ori_x = capture.get(cv2.CAP_PROP_FRAME_WIDTH)
     ori_x = int(ori_x + 0.5)
     ori_y = capture.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -85,14 +85,14 @@ def play(
     # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
 
     rewind, clear, console_resize = get_func(need_clear)
-    fontmap = open(font, 'r').read().split('\n')
+    fontmap = open(font_pth, 'r').read().split('\n')
 
-    if output or preload:
-        if not output:
-            output = video + '.badapple'
-        output = os.path.abspath(output)
+    if output_pth or preload:
+        if not output_pth:
+            output_pth = video_pth + '.badapple'
+        output_pth = os.path.abspath(output_pth)
 
-        with open(output, 'w') as fp:
+        with open(output_pth, 'w') as fp:
             fp.write('%d %d %d\n\n' % (x, y, int(clk*1000+0.5)))
             fp.flush()
 

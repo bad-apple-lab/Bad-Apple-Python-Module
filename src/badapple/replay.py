@@ -7,14 +7,14 @@ from .audio import get_player
 
 def replay(
     p_list: list,
-    video: str, audio: str, player: str,
+    video_pth: str, audio_pth: str, player: str,
     message: str, need_clear: bool = True, debug: bool = False
 ) -> None:
-    video = os.path.abspath(video)
-    open(video, 'r').close()
-    p = get_player(audio, player)
+    video_pth = os.path.abspath(video_pth)
+    open(video_pth, 'r').close()
+    p = get_player(audio_pth, player)
 
-    s = open(video, 'r').read().split('\n\n')
+    s = open(video_pth, 'r').read().split('\n\n')
     x, y, clk = s[0].split()
     x = int(x)
     y = int(y)

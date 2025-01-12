@@ -121,21 +121,21 @@ if __name__ == "__main__":
 
     p_list = list()
 
-    video = ba_get(a.input)
-    audio = None
+    video_pth = ba_get(a.input)
+    audio_pth = None
     player = None
     if with_anyplayer:
-        audio = ba_get(a.audio)
+        audio_pth = ba_get(a.audio)
         player = a.audio_player
-    font = ba_get(a.font)
+    font_pth = ba_get(a.font)
 
     try:
         play(
             p_list=p_list,
-            video=video, output=a.output,
+            video_pth=video_pth, output_pth=a.output,
             x=x, y=y, fps=a.rate,
-            audio=audio, player=player,
-            color=a.color, message=a.message, font=font,
+            audio_pth=audio_pth, player=player,
+            color=a.color, message=a.message, font_pth=font_pth,
             need_clear=need_clear, contrast=a.contrast, preload=a.preload,
             debug=a.debug, jump=a.jump
         )

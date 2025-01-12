@@ -44,19 +44,23 @@ def get_buffer(
             max_pixel = np.max(img)
             min_pixel = np.min(img)
             if max_pixel == min_pixel:
+                # return '\n'.join([chr(fontmap[max_pixel, max_pixel])*x]*y)
+                # img = np.full((y, x), max_pixel, dtype=np.uint8)
                 if max_pixel >= 128:
-                    img = np.full((y, x), 0xff, dtype=np.uint8)
+                    return '\n'.join([chr(fontmap[0xff, 0xff])*x]*y)
+                    # img = np.full_like(img, 0xff, dtype=np.uint8)
                 else:
-                    img = np.zeros((y, x), dtype=np.uint8)
+                    return '\n'.join([chr(fontmap[0, 0])*x]*y)
+                    # img = np.zeros_like(img, dtype=np.uint8)
             else:
                 max_min = max_pixel - min_pixel
-                img = (((img.astype(dtype=np.uint16) - min_pixel) * 0xff +
-                        max_min // 2) // max_min).astype(dtype=np.uint8)
+                img = (((
+                    img.astype(dtype=np.uint16) - min_pixel
+                ) * 0xff + max_min // 2) // max_min).astype(dtype=np.uint8)
 
-        even_rows = img[::2, :]
-        odd_rows = img[1::2, :]
-
-        chars = fontmap[even_rows, odd_rows]
+        # even_rows = img[::2, :]
+        # odd_rows = img[1::2, :]
+        chars = fontmap[img[::2, :], img[1::2, :]]
 
         return '\n'.join([''.join(map(chr, row)) for row in chars])
 

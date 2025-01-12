@@ -87,7 +87,8 @@ def play(
 
     rewind, clear, console_resize = get_func(need_clear)
     fontmap = np.array(
-        [list(i) for i in open(font_pth, 'r').read().split('\n')]
+        [[ord(j) for j in i] for i in open(font_pth, 'r').read().split('\n')],
+        dtype=np.uint8
     )
 
     if output_pth or preload:

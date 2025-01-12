@@ -36,7 +36,7 @@ def get_buffer(
     buffer = ''
 
     if color == COLOR_ASCII:
-        img = cv2.resize(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY), (x, y))
+        img = cv2.cvtColor(cv2.resize(img, (x, y)), cv2.COLOR_BGR2GRAY)
         # np.ndarray(shape=(y, x), dtype=np.uint8)
         # x*y pixel -> x*y/2 char
 
@@ -58,7 +58,7 @@ def get_buffer(
 
         chars = fontmap[even_rows, odd_rows]
 
-        return '\n'.join(''.join(map(chr, row)) for row in chars)
+        return '\n'.join([''.join(map(chr, row)) for row in chars])
 
     elif color == COLOR_RGB24:
         y = y // 2

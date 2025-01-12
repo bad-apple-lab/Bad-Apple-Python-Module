@@ -1,5 +1,6 @@
 import os
 import time
+import numpy as np
 import cv2
 
 from .util import get_func
@@ -85,7 +86,9 @@ def play(
     # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
 
     rewind, clear, console_resize = get_func(need_clear)
-    fontmap = open(font_pth, 'r').read().split('\n')
+    fontmap = np.array(
+        [list(i) for i in open(font_pth, 'r').read().split('\n')]
+    )
 
     if output_pth or preload:
         if not output_pth:

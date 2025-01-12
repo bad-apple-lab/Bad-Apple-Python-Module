@@ -117,8 +117,7 @@ def play(
                     fontmap, contrast
                 )
 
-                fp.write(buffer + '\n')
-                fp.flush()
+                fp.write(buffer + '\n\n', flush=True)
 
     else:
         # print('BEGINNING...', flush=True)
@@ -155,7 +154,7 @@ def play(
 
             rewind()
             # clear()
-            print(buffer, end='', flush=True)
+            print(buffer, flush=True)
 
             t1 = time.time()
             while t1 - t0 < clk:

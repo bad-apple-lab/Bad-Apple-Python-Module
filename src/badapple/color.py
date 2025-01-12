@@ -28,7 +28,7 @@ if ansi_available():
 
 def get_buffer(
     img: np.ndarray, x: int, y: int, color: str, message: str,
-    fontmap: list, contrast: bool
+    fontmap: np.ndarray, contrast: bool
 ) -> str:
     if color not in COLOR_LIST:
         raise ValueError('%s is not a supported color type' % color)
@@ -53,12 +53,12 @@ def get_buffer(
                 img = (((img.astype(dtype=np.uint16) - min_pixel) * 0xff +
                         max_min // 2) // max_min).astype(dtype=np.uint8)
 
-        for j in range(y//2):
-            for k in range(x):
-                buffer += fontmap[img[j*2, k]][img[j*2+1, k]]
-            buffer += '\n'
+        even_rows = img[::2, :]
+        odd_rows = img[1::2, :]
 
-        return buffer
+        chars = fontmap[even_rows, odd_rows]
+
+        return '\n'.join(''.join(map(chr, row)) for row in chars)
 
     elif color == COLOR_RGB24:
         y = y // 2

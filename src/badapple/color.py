@@ -66,13 +66,15 @@ def get_buffer(
 
     elif color == COLOR_RGB24:
         y = y // 2
-        img = cv2.resize(img, (x, y))
+        img = cv2.resize(img, (x, y)).reshape(-1, 3)[:, ::-1]
         # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
         # x*(y/2) pixel -> x*(y/2) char
-        for j in range(y):
-            for k in range(x):
-                buffer += '\x1b[48;2;%d;%d;%dm ' % tuple(img[j, k][-1::-1])
-            buffer += '\x1b[0m\n'
+        color_seqs = [
+            '\x1b[48;2;%d;%d;%dm ' % (r, g, b) for r, g, b in img
+        ]
+        return '\x1b[0m\n'.join([
+            ''.join(color_seqs[i:i+y]) for i in range(0, len(color_seqs), y)
+        ]) + '\x1b[0m'
 
     elif color in COLOR_X256_LIST:
         import x256offline as x256

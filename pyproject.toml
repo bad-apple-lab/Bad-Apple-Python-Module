@@ -3,7 +3,7 @@ name = "badapple"
 version = "0.0.9a"
 description = "play the video in the console as ASCII art"
 readme = "README.rst"
-requires-python = ">=3.7"
+requires-python = ">=3.9"
 license = {file = "LICENSE"}
 keywords = ["badapple", "asciiart"]
 

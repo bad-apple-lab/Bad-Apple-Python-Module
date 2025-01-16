@@ -20,7 +20,7 @@ classifiers = [
 ]
 
 dependencies = [
-  "opencv-python", "x256offline>=0.0.3"
+  "opencv-python", "x256numpy"
 ]
 
 [project.optional-dependencies]

@@ -74,20 +74,19 @@ def get_buffer(
         ]) + '\x1b[0m'
 
     elif color in COLOR_X256_LIST:
-        import x256offline as x256
         y = y // 2
-        img = cv2.resize(img, (x, y)).astype(np.int32)
+        img = cv2.resize(img, (x, y)).reshape(-1, 3)
         # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
         # x*(y/2) pixel -> x*(y/2) char
         weighted = color in [COLOR_X256W, COLOR_X232W]
         n_color = 232 if color in [COLOR_X232E, COLOR_X232W] else 256
-        for j in range(y):
-            for k in range(x):
-                b, g, r = img[j, k]
-                buffer += '\x1b[48;5;%dm ' % x256.from_rgb(
-                    r, g, b, weighted, n_color
-                )
-            buffer += '\x1b[0m\n'
+        ans = x256numpy.from_rgb(img[:, 2], img[:, 1], img[:, 0], weighted, n_color)
+        color_seqs = [
+            '\x1b[48;5;%dm ' % i for i in ans
+        ]
+        return '\x1b[0m\n'.join([
+            ''.join(color_seqs[i:i+y]) for i in range(0, len(color_seqs), y)
+        ]) + '\x1b[0m'
 
     elif color == COLOR_HALFWIDTH:
         y = y // 2

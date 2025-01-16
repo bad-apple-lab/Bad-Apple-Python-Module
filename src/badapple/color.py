@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import x256numpy
 
 from .util import ansi_available
 
@@ -19,11 +20,7 @@ if ansi_available():
     COLOR_LIST.append(COLOR_RGB24)
     COLOR_LIST.append(COLOR_HALFWIDTH)
     COLOR_LIST.append(COLOR_FULLWIDTH)
-    try:
-        import x256offline
-        COLOR_LIST += COLOR_X256_LIST
-    except ImportError:
-        pass
+    COLOR_LIST += COLOR_X256_LIST
 
 
 def get_buffer(

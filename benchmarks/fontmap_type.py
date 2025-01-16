@@ -15,7 +15,7 @@ t_str = 0.
 t_int = 0.
 
 for _ in range(4096):
-    img = np.random.randint(0, 255, (96, 54), dtype=np.uint8)
+    img = np.random.randint(0, 256, (96, 54), dtype=np.uint8)
     even_rows = img[::2, :]
     odd_rows = img[1::2, :]
 

@@ -19,7 +19,7 @@ t_flat_rgb_add = 0.
 
 for epoch in range(1024):
     y, x = 96, 54
-    img = np.random.randint(0, 255, (x, y, 3), dtype=np.uint8)
+    img = np.random.randint(0, 256, (x, y, 3), dtype=np.uint8)
 
     for __ in range(8):
         # # flat bgr f-string

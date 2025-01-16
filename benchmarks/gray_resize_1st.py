@@ -8,7 +8,7 @@ t_resize_1st = 0.
 _max_err = 0.
 
 for epoch in range(4096):
-    img = np.random.randint(0, 255, (1920, 1080, 3), dtype=np.uint8)
+    img = np.random.randint(0, 256, (1920, 1080, 3), dtype=np.uint8)
 
     for y, x in [(96, 54), (192, 108), (44, 66), (100, 100)]:
         for __ in range(8):

@@ -17,8 +17,15 @@ t_flat_rgb_mo = 0.
 t_flat_rgb_mot = 0.
 t_flat_rgb_add = 0.
 
+t_ibgr = 0.
+t_irgb = 0.
+t_flat_ibgr = 0.
+t_flat_irgb = 0.
+
+y, x = 96, 54
+n_pixels = x * y
+
 for epoch in range(1024):
-    y, x = 96, 54
     img = np.random.randint(0, 256, (x, y, 3), dtype=np.uint8)
 
     for __ in range(8):
@@ -45,6 +52,20 @@ for epoch in range(1024):
         ]) + '\x1b[0m'
         t1 = time.time()
         t_flat_bgr_mo += t1 - t0
+
+        # flat ibgr modulo
+        t0 = time.time()
+        img_flat_ibgr = img.reshape(-1, 3)
+        color_seqs = [
+            '\x1b[48;2;%d;%d;%dm ' % (
+                img_flat_ibgr[i, 2], img_flat_ibgr[i, 1], img_flat_ibgr[i, 0]
+            ) for i in range(n_pixels)
+        ]
+        s_flat_ibgr = '\x1b[0m\n'.join([
+            ''.join(color_seqs[i:i+y]) for i in range(0, len(color_seqs), y)
+        ]) + '\x1b[0m'
+        t1 = time.time()
+        t_flat_ibgr += t1 - t0
 
         # # flat bgr add
         # t0 = time.time()
@@ -82,6 +103,20 @@ for epoch in range(1024):
         ]) + '\x1b[0m'
         t1 = time.time()
         t_flat_rgb_mo += t1 - t0
+
+        # flat irgb modulogb
+        t0 = time.time()
+        img_flat_irgb = img.reshape(-1, 3)[:, ::-1]
+        color_seqs = [
+            '\x1b[48;2;%d;%d;%dm ' % (
+                img_flat_irgb[i, 0], img_flat_irgb[i, 1], img_flat_irgb[i, 2]
+            ) for i in range(n_pixels)
+        ]
+        s_flat_ibgr = '\x1b[0m\n'.join([
+            ''.join(color_seqs[i:i+y]) for i in range(0, len(color_seqs), y)
+        ]) + '\x1b[0m'
+        t1 = time.time()
+        t_flat_irgb += t1 - t0
 
         # # flat rgb modulo tuple
         # t0 = time.time()
@@ -128,6 +163,18 @@ for epoch in range(1024):
         t1 = time.time()
         t_bgr_mo += t1 - t0
 
+        # ibgr modulo
+        t0 = time.time()
+        s_ibgr = '\x1b[0m\n'.join([
+            ''.join([
+                '\x1b[48;2;%d;%d;%dm ' % (
+                    row[i, 2], row[i, 1], row[i, 0]
+                ) for i in range(y)
+            ]) for row in img
+        ]) + '\x1b[0m'
+        t1 = time.time()
+        t_ibgr += t1 - t0
+
         # # bgr add
         # t0 = time.time()
         # s_bgr_add = '\x1b[0m\n'.join([
@@ -160,6 +207,19 @@ for epoch in range(1024):
         ]) + '\x1b[0m'
         t1 = time.time()
         t_rgb_mo += t1 - t0
+
+        # irgb modulo
+        t0 = time.time()
+        img_irgb = img[:, :, ::-1]
+        s_irgb = '\x1b[0m\n'.join([
+            ''.join([
+                '\x1b[48;2;%d;%d;%dm ' % (
+                    row[i, 0], row[i, 1], row[i, 2]
+                ) for i in range(y)
+            ]) for row in img_irgb
+        ]) + '\x1b[0m'
+        t1 = time.time()
+        t_irgb += t1 - t0
 
         # # rgb modulo tuple
         # t0 = time.time()
@@ -204,6 +264,11 @@ print('flat_bgr_mo:', t_flat_bgr_mo)
 print('flat_rgb_mo:', t_flat_rgb_mo)
 # print('flat_rgb_mot:', t_flat_rgb_mot)
 # print('flat_rgb_add:', t_flat_rgb_add)
+
+print('ibgr:', t_ibgr)
+print('irgb:', t_irgb)
+print('flat_ibgr:', t_flat_ibgr)
+print('flat_irgb:', t_flat_irgb)
 
 # bgr_mo: 23.232539415359497
 # rgb_mo: 23.20311450958252

@@ -24,7 +24,7 @@ if ansi_available():
 
 
 def get_buffer(
-    img: np.ndarray, x: int, y: int, color: str, message: str,
+    img: np.ndarray, x: int, y: int, color: str, message: np.ndarray,
     fontmap: np.ndarray, contrast: bool
 ) -> str:
     if color not in COLOR_LIST:
@@ -77,7 +77,6 @@ def get_buffer(
     elif color in COLOR_X256_LIST:
         y = y // 2
         img = cv2.resize(img, (x, y)).reshape(-1, 3)
-        # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
         # x*(y/2) pixel -> x*(y/2) char
         weighted = color in [COLOR_X256W, COLOR_X232W]
         n_color = 232 if color in [COLOR_X232E, COLOR_X232W] else 256
@@ -91,31 +90,31 @@ def get_buffer(
 
     elif color == COLOR_HALFWIDTH:
         y = y // 2
-        img = cv2.resize(img, (x, y))
-        # np.ndarray(shape=(y/2, x, 3), dtype=np.uint8)
+        n_pixels = x * y
+        img = cv2.resize(img, (x, y)).reshape(-1, 3)
         # x*(y/2) pixel -> x*(y/2) char
-        m = message * (x*y//len(message)+1)
-        mi = 0
-        for j in range(y):
-            for k in range(x):
-                buffer += '\x1b[38;2;%d;%d;%dm' % tuple(img[j, k][-1::-1])
-                buffer += m[mi]
-                mi += 1
-            buffer += '\x1b[0m\n'
+        color_seqs = [
+            '\x1b[38;2;%d;%d;%dm%s' % (
+                img[i, 2], img[i, 1], img[i, 0], chr(message[i])
+            ) for i in range(n_pixels)
+        ]
+        return '\x1b[0m\n'.join([
+            ''.join(color_seqs[i:i+y]) for i in range(0, n_pixels, y)
+        ]) + '\x1b[0m'
 
     elif color == COLOR_FULLWIDTH:
         x = x // 2
         y = y // 2
-        img = cv2.resize(img, (x, y))
-        # np.ndarray(shape=(y/2, x/2, 3), dtype=np.uint8)
+        n_pixels = x * y
+        img = cv2.resize(img, (x, y)).reshape(-1, 3)
         # (x/2)*(y/2) pixel -> (x/2)*(y/2) char
-        m = message * (x*y//len(message)+1)
-        mi = 0
-        for j in range(y):
-            for k in range(x):
-                buffer += '\x1b[38;2;%d;%d;%dm' % tuple(img[j, k][-1::-1])
-                buffer += m[mi]
-                mi += 1
-            buffer += '\x1b[0m\n'
+        color_seqs = [
+            '\x1b[38;2;%d;%d;%dm%s' % (
+                img[i, 2], img[i, 1], img[i, 0], chr(message[i])
+            ) for i in range(n_pixels)
+        ]
+        return '\x1b[0m\n'.join([
+            ''.join(color_seqs[i:i+y]) for i in range(0, n_pixels, y)
+        ]) + '\x1b[0m'
 
     return buffer

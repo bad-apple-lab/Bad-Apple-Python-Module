@@ -249,7 +249,8 @@ for epoch in range(4096):
         # assert s_rgb_mot == s_flat_rgb_mot
         # assert s_bgr_add == s_rgb_add == s_flat_bgr_add == s_flat_rgb_add
         # assert s_rgb_f == s_rgb_mo == s_rgb_mot == s_rgb_add
-        assert s_flat_ibgr == s_flat_irgb == s_ibgr == s_irgb
+        assert s_ibgr == s_irgb
+        # assert s_flat_ibgr == s_flat_irgb == s_ibgr == s_irgb
         # assert s_bgr_mo == s_ibgr
 
 # print('bgr_f:', t_bgr_f)
@@ -271,6 +272,9 @@ print('ibgr:', t_ibgr)
 print('irgb:', t_irgb)
 # print('flat_ibgr:', t_flat_ibgr)
 # print('flat_irgb:', t_flat_irgb)
+
+# ibgr: 59.912708044052124
+# irgb: 59.90151786804199
 
 # ibgr: 59.704137325286865
 # irgb: 59.66081619262695

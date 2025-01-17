@@ -112,7 +112,7 @@ for epoch in range(1024):
                 img_flat_irgb[i, 0], img_flat_irgb[i, 1], img_flat_irgb[i, 2]
             ) for i in range(n_pixels)
         ]
-        s_flat_ibgr = '\x1b[0m\n'.join([
+        s_flat_irgb = '\x1b[0m\n'.join([
             ''.join(color_seqs[i:i+y]) for i in range(0, len(color_seqs), y)
         ]) + '\x1b[0m'
         t1 = time.time()
@@ -249,6 +249,8 @@ for epoch in range(1024):
         # assert s_rgb_mot == s_flat_rgb_mot
         # assert s_bgr_add == s_rgb_add == s_flat_bgr_add == s_flat_rgb_add
         # assert s_rgb_f == s_rgb_mo == s_rgb_mot == s_rgb_add
+        assert s_flat_ibgr == s_flat_irgb == s_ibgr == s_irgb
+        assert s_bgr_mo == s_ibgr
 
 # print('bgr_f:', t_bgr_f)
 print('bgr_mo:', t_bgr_mo)
@@ -269,6 +271,24 @@ print('ibgr:', t_ibgr)
 print('irgb:', t_irgb)
 print('flat_ibgr:', t_flat_ibgr)
 print('flat_irgb:', t_flat_irgb)
+
+# bgr_mo: 23.205034732818604
+# rgb_mo: 23.194499015808105
+# flat_bgr_mo: 22.882583141326904
+# flat_rgb_mo: 22.788300037384033
+# ibgr: 15.164149522781372
+# irgb: 15.055457830429077
+# flat_ibgr: 15.601244688034058
+# flat_irgb: 15.577321529388428
+
+# bgr_mo: 23.181134939193726
+# rgb_mo: 23.205081701278687
+# flat_bgr_mo: 22.881837129592896
+# flat_rgb_mo: 22.801182508468628
+# ibgr: 15.035505294799805
+# irgb: 15.042108297348022
+# flat_ibgr: 15.592838525772095
+# flat_irgb: 15.579696655273438
 
 # bgr_mo: 23.232539415359497
 # rgb_mo: 23.20311450958252

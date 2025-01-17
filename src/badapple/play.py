@@ -75,6 +75,12 @@ def play(
         else:
             y += 1
 
+    rewind, clear, console_resize = get_func(need_clear)
+    fontmap = np.array(
+        [[ord(j) for j in i] for i in open(font_pth, 'r').read().split('\n')],
+        dtype=np.uint8
+    )
+
     print('[%d:%d %.2lfHz] -%s-> [%d:%d %.2lfHz] %.3lfs/%dms%s %s' % (
         ori_x, ori_y, ori_fps,
         p.name if p else '',
@@ -84,12 +90,6 @@ def play(
         message
     ), flush=True)
     # [1444:1080 29.97Hz] -ffplay-> [72:54 9.99Hz] 232.065s
-
-    rewind, clear, console_resize = get_func(need_clear)
-    fontmap = np.array(
-        [[ord(j) for j in i] for i in open(font_pth, 'r').read().split('\n')],
-        dtype=np.uint8
-    )
 
     if output_pth or preload:
         if not output_pth:
